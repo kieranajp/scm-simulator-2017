@@ -1,16 +1,48 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
-public class PlayerPickup : MonoBehaviour {
+public class PlayerPickup : PlayerBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    Ingredient pickedObject;
+    Ingredient candidate;
+
+    private bool hasObject = false;
+
+    private void Update()
+    {
+        if (PlayerInput.GetButton("A", Player))
+        {
+            if (pickedObject != null) {
+                PutDownObject(pickedObject);
+            } else {
+                PickUpObject(candidate);
+            }
+        }
+    }
+
+    private void PutDownObject(Ingredient pickedObject)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void PickUpObject(Ingredient candidate)
+    {
+        if (candidate != null) {
+            pickedObject = candidate;
+            hasObject = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Ingredient>() != null)
+        {
+            candidate = collision.GetComponent<Ingredient>();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        candidate = null;
+    }
 }

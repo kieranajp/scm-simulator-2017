@@ -7,7 +7,7 @@ public enum IngredientType
     Banana
 }
 
-public class Ingredient : MonoBehaviour, IPickable {
+public class Ingredient : MonoBehaviour {
 
     public bool IsPickedUp;
     public bool IsUsed;

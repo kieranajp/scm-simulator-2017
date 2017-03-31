@@ -2,8 +2,8 @@
 
 public class PlayerPickup : PlayerBehaviour {
 
-    Ingredient pickedObject;
-    Ingredient candidate;
+    Pickable pickedObject;
+    Pickable candidate;
 
     private bool hasObject = false;
 
@@ -24,7 +24,7 @@ public class PlayerPickup : PlayerBehaviour {
         }
     }
 
-    private void PutDownObject(Ingredient ingredient)
+    private void PutDownObject(Pickable ingredient)
     {
         ingredient.PutDown();
         hasObject = false;
@@ -32,9 +32,10 @@ public class PlayerPickup : PlayerBehaviour {
         candidate = null;
     }
 
-    private void PickUpObject(Ingredient ingredient)
+    private void PickUpObject(Pickable ingredient)
     {
-        if (ingredient != null) {
+        if (ingredient != null && ingredient.CanBePicked) {
+            ingredient.PickUp();
             pickedObject = ingredient;
             hasObject = true;
         }
@@ -42,9 +43,13 @@ public class PlayerPickup : PlayerBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Ingredient>() != null)
+        var pickable = collision.GetComponent<Pickable>();
+        if (pickable != null)
         {
-            candidate = collision.GetComponent<Ingredient>();
+            if (pickable.CanBePicked)
+            {
+                candidate = pickable;
+            }
         }
     }
 

@@ -7,19 +7,20 @@ public enum IngredientType
     Banana
 }
 
-public class Ingredient : MonoBehaviour {
-
-    public bool IsPickedUp;
-    public bool IsUsed;
+public class Ingredient : Pickable {
     public IngredientType Type;
 
-    public void PickUp()
+    override public void PutDown()
     {
-        IsPickedUp = true;
-    }
-
-    public void PutDown()
-    {
-        IsUsed = true;
+        base.PutDown();
+        var colliders = Physics2D.OverlapCircleAll(transform.position, 1f);
+        foreach (Collider2D c in colliders)
+        {
+            var box = c.GetComponent<Box>();
+            if (box != null)
+            {
+                box.AddIngredient(this);
+            }
+        }
     }
 }

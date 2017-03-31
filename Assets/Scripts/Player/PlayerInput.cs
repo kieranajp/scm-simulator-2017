@@ -5,7 +5,6 @@ public class PlayerInput : MonoBehaviour {
     public void Start()
     {
         var joys = Input.GetJoystickNames();
-        Debug.Log("HELLO");
         for (var i = 0; i < joys.Length; i++)
         {
             Debug.Log(joys[i]);

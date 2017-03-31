@@ -22,10 +22,9 @@ public class PlayerMovement : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void FixedUpdate () {
         var horizontal = PlayerInput.GetAxis("Horizontal", Player) * Speed;
         var vertical = PlayerInput.GetAxis("Vertical", Player) * Speed;
-        rb.velocity = new Vector2(horizontal, vertical);
+        rb.velocity = new Vector3(horizontal, vertical, 0);
     }
 }

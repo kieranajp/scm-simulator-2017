@@ -13,12 +13,13 @@ public enum Player
 
 public class PlayerMovement : MonoBehaviour {
 
-    public Player player;
+    public Player Player;
+    public float Speed;
 
     // Update is called once per frame
     void Update () {
-        var horizontal = PlayerInput.GetAxis("Horizontal", player);
-        var vertical = PlayerInput.GetAxis("Vertical", player);
+        var horizontal = PlayerInput.GetAxis("Horizontal", Player) * Time.deltaTime * Speed;
+        var vertical = PlayerInput.GetAxis("Vertical", Player) * Time.deltaTime * Speed;
 
         transform.Translate(horizontal, vertical, 0);
     }

@@ -19,7 +19,10 @@ public class Conveyor : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var i = collision.GetComponent<Ingredient>();
-        this.ingredients.Add(i);
+        if (i != null)
+        {
+            this.ingredients.Add(i);
+        }
 
     }
 

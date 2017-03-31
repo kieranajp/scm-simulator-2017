@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: f667af62d78ba40748edd52938268268
-timeCreated: 1490993706
+guid: a5fc2c50631bd424bb08474db901ca8d
+timeCreated: 1490996029
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -14,6 +14,12 @@ TextureImporter:
     21300014: WorkerSpriteSheet_7
     21300016: WorkerSpriteSheet_8
     21300018: WorkerSpriteSheet_9
+    21300020: WorkerSpriteSheet_10
+    21300022: WorkerSpriteSheet_11
+    21300024: WorkerSpriteSheet_12
+    21300026: WorkerSpriteSheet_13
+    21300028: WorkerSpriteSheet_14
+    21300030: WorkerSpriteSheet_15
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -125,8 +131,8 @@ TextureImporter:
       name: WorkerSpriteSheet_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 96
+        x: 64
+        y: 128
         width: 32
         height: 32
       alignment: 0
@@ -138,8 +144,8 @@ TextureImporter:
       name: WorkerSpriteSheet_3
       rect:
         serializedVersion: 2
-        x: 32
-        y: 96
+        x: 96
+        y: 128
         width: 32
         height: 32
       alignment: 0
@@ -151,7 +157,7 @@ TextureImporter:
       name: WorkerSpriteSheet_4
       rect:
         serializedVersion: 2
-        x: 64
+        x: 0
         y: 96
         width: 32
         height: 32
@@ -164,7 +170,7 @@ TextureImporter:
       name: WorkerSpriteSheet_5
       rect:
         serializedVersion: 2
-        x: 96
+        x: 32
         y: 96
         width: 32
         height: 32
@@ -177,8 +183,8 @@ TextureImporter:
       name: WorkerSpriteSheet_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 64
+        x: 64
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -190,8 +196,8 @@ TextureImporter:
       name: WorkerSpriteSheet_7
       rect:
         serializedVersion: 2
-        x: 32
-        y: 64
+        x: 96
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -203,7 +209,7 @@ TextureImporter:
       name: WorkerSpriteSheet_8
       rect:
         serializedVersion: 2
-        x: 64
+        x: 0
         y: 64
         width: 32
         height: 32
@@ -216,8 +222,86 @@ TextureImporter:
       name: WorkerSpriteSheet_9
       rect:
         serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WorkerSpriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WorkerSpriteSheet_11
+      rect:
+        serializedVersion: 2
         x: 96
         y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WorkerSpriteSheet_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WorkerSpriteSheet_13
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WorkerSpriteSheet_14
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: WorkerSpriteSheet_15
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
         width: 32
         height: 32
       alignment: 0

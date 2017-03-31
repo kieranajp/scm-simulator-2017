@@ -15,7 +15,7 @@ public class PlayerInput : MonoBehaviour {
     public static float GetAxis(string axis, Player player)
     {
         var p = player.ToString().Substring(1, 1);
-        return Input.GetAxis(axis + "_" + p);
+        return Input.GetAxisRaw(axis + "_" + p);
     }
 
     public static bool GetButton(string keyName, Player player)

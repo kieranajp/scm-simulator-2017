@@ -15,12 +15,17 @@ public class PlayerMovement : MonoBehaviour {
 
     public Player Player;
     public float Speed;
+    private Rigidbody2D rb;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     // Update is called once per frame
-    void Update () {
-        var horizontal = PlayerInput.GetAxis("Horizontal", Player) * Time.deltaTime * Speed;
-        var vertical = PlayerInput.GetAxis("Vertical", Player) * Time.deltaTime * Speed;
-
-        transform.Translate(horizontal, vertical, 0);
+    void FixedUpdate () {
+        var horizontal = PlayerInput.GetAxis("Horizontal", Player) * Speed;
+        var vertical = PlayerInput.GetAxis("Vertical", Player) * Speed;
+        rb.velocity = new Vector2(horizontal, vertical);
     }
 }

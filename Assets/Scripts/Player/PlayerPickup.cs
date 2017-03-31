@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerPickup : PlayerBehaviour {
 
@@ -10,7 +9,7 @@ public class PlayerPickup : PlayerBehaviour {
 
     private void Update()
     {
-        if (PlayerInput.GetButton("A", Player))
+        if (PlayerInput.GetButtonDown("A", Player))
         {
             if (pickedObject != null) {
                 PutDownObject(pickedObject);
@@ -18,17 +17,25 @@ public class PlayerPickup : PlayerBehaviour {
                 PickUpObject(candidate);
             }
         }
+
+        if (hasObject)
+        {
+            pickedObject.transform.position = transform.position + new Vector3(0, 0.5f);
+        }
     }
 
-    private void PutDownObject(Ingredient pickedObject)
+    private void PutDownObject(Ingredient ingredient)
     {
-        throw new NotImplementedException();
+        ingredient.PutDown();
+        hasObject = false;
+        pickedObject = null;
+        candidate = null;
     }
 
-    private void PickUpObject(Ingredient candidate)
+    private void PickUpObject(Ingredient ingredient)
     {
-        if (candidate != null) {
-            pickedObject = candidate;
+        if (ingredient != null) {
+            pickedObject = ingredient;
             hasObject = true;
         }
     }

@@ -24,4 +24,16 @@ public class PlayerInput : MonoBehaviour {
         return Input.GetButton(keyName + "_" + p);
     }
 
+    public static bool GetButtonUp(string keyName, Player player)
+    {
+        var p = player.ToString().Substring(1, 1);
+        return Input.GetButtonUp(keyName + "_" + p);
+    }
+
+    public static bool GetButtonDown(string keyName, Player player)
+    {
+        var p = player.ToString().Substring(1, 1);
+        return Input.GetButtonDown(keyName + "_" + p);
+    }
+
 }

@@ -5,7 +5,7 @@ public class PlayerPickup : PlayerBehaviour {
     Pickable pickedObject;
     Pickable candidate;
 
-    private bool hasObject = false;
+    public bool IsCarrying = false;
 
     private void Update()
     {
@@ -18,7 +18,7 @@ public class PlayerPickup : PlayerBehaviour {
             }
         }
 
-        if (hasObject)
+        if (IsCarrying)
         {
             pickedObject.transform.position = transform.position + new Vector3(0, 0.5f);
         }
@@ -27,7 +27,7 @@ public class PlayerPickup : PlayerBehaviour {
     private void PutDownObject(Pickable ingredient)
     {
         ingredient.PutDown();
-        hasObject = false;
+        IsCarrying = false;
         pickedObject = null;
         candidate = null;
     }
@@ -37,7 +37,7 @@ public class PlayerPickup : PlayerBehaviour {
         if (ingredient != null && ingredient.CanBePicked) {
             ingredient.PickUp();
             pickedObject = ingredient;
-            hasObject = true;
+            IsCarrying = true;
         }
     }
 

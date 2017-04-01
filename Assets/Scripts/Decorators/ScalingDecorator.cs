@@ -21,6 +21,13 @@ public class ScalingDecorator : ProximityDecorator {
         _collider2d = GetComponent<BoxCollider2D>();
         _colliderOffset = _collider2d.offset;
         _colliderSize = _collider2d.size;
+
+        if (TriggerBody == null)
+        {
+            TriggerBody = FindObjectOfType<PlayerBehaviour>().gameObject;
+        }
+
+        Glow();
     }
 
     private void Update()
@@ -28,10 +35,6 @@ public class ScalingDecorator : ProximityDecorator {
         if (pickable.IsPickedUp) {
             Normalize();
             return;
-        }
-
-        if (inProximity) {
-            Glow();
         }
 
         if (_isScaling)

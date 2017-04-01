@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Pickable))]
 public class ArrowDecorator : ProximityDecorator {
 
@@ -24,7 +25,6 @@ public class ArrowDecorator : ProximityDecorator {
             Arrow.SetActive(true);
             Arrow.transform.position = transform.position + Offset;
             var scaledValue = 1 + Mathf.PingPong(Time.time * 3, 1);
-
             Arrow.transform.localScale = new Vector3(scaledValue, scaledValue);
         }
     }

@@ -27,7 +27,7 @@ public class Timer : MonoBehaviour {
         if (TimeLeft < 0)
         {
             _isDone = true;
-            gameObject.BroadcastMessage("OnTimerExpire");
+            gameObject.BroadcastMessage("OnTimerExpire", SendMessageOptions.DontRequireReceiver);
             return;
         }
 

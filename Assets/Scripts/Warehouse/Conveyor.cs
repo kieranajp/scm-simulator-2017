@@ -54,8 +54,12 @@ public class Conveyor : MonoBehaviour {
 
         foreach(var i in items)
         {
+            if (i == null) {
+                continue;
+            }
             i.transform.Translate(new Vector3(0, -1 * Time.deltaTime * Speed, 0), Space.World);
         }
+
 	}
 
     void spawnIngredients(float delta)

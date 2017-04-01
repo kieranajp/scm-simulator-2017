@@ -8,6 +8,9 @@ public class Conveyor : MonoBehaviour {
     private HashSet<Ingredient> ingredients = new HashSet<Ingredient>();
     private HashSet<Ingredient> takenOutIngredients = new HashSet<Ingredient>();
 
+    public float MinSpawnTime = 1;
+    public float MaxSpawnTime = 2;
+
     public GameObject[] Ingredients;
 
     public float lastSpawn;
@@ -53,7 +56,7 @@ public class Conveyor : MonoBehaviour {
             pos.x += Random.Range(-.1f, .1f);
 
             GameObject.Instantiate(Ingredients[i], pos, new Quaternion());
-            this.lastSpawn = Random.Range(1.5f, 2.5f);
+            this.lastSpawn = Random.Range(MinSpawnTime, MaxSpawnTime);
         }
     }
 }

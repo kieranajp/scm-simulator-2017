@@ -10,10 +10,11 @@ public class Truck : Actionable {
         if (pickup != null)
         {
             var pickedUpObject = pickup.PickedUpObject;
-            if (pickedUpObject)
+            if (pickedUpObject && pickedUpObject.GetComponent<Box>() != null)
             {
+                var box = pickedUpObject.GetComponent<Box>();
                 pickup.PutDownObject();
-                //pickedUpObject.PutDown();
+                box.ThrowBox();
             }
         }
     }

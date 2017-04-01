@@ -11,6 +11,7 @@ public class Box : Pickable {
     private bool _isClosed;
     private PlayerMovement movement;
     private float _originalSpeed;
+    public GameObject AnimationThrow;
 
     private void Start()
     {
@@ -76,6 +77,15 @@ public class Box : Pickable {
             i.GetComponent<SpriteRenderer>().enabled = false;
         }
         Destroy(transform.GetChild(0).GetComponent<Collider2D>());
+    }
+
+    public void ThrowBox()
+    {
+        FindObjectOfType<BoxManager>().ProccessBox(this);
+        this.PutDown();
+        var obj = Instantiate(AnimationThrow, transform.position, Quaternion.identity);
+        gameObject.SetActive(false);
+        Destroy(obj, 1f);
     }
 
     public bool HasIngredient(IngredientType type)

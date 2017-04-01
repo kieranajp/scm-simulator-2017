@@ -7,12 +7,15 @@ public class ArrowDecorator : ProximityDecorator {
     public GameObject Arrow;
     public Vector3 Offset = new Vector3(0, 1f);
     private Pickable pickable;
+    public bool AlwaysActive = false;
 
     protected override void Start()
     {
         base.Start();
         Arrow.SetActive(false);
         pickable = GetComponent<Pickable>();
+        Arrow = Instantiate(Arrow, transform);
+        Arrow.SetActive(false);
     }
 
     private void Update()
@@ -22,7 +25,7 @@ public class ArrowDecorator : ProximityDecorator {
             return;
         }
 
-        if (inProximity) {
+        if (inProximity || AlwaysActive) {
             Arrow.SetActive(true);
             Arrow.transform.position = transform.position + Offset;
             var scaledValue = 1 + Mathf.PingPong(Time.time * 3, 1);

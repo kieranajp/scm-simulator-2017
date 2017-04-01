@@ -10,6 +10,7 @@ public class ScalingDecorator : ProximityDecorator {
     public float PulsatingSpeed = 5f;
     public float Amplitude = 1f;
     public float BasicScale = 1;
+    public bool AlwaysActive = false;
 
     private Vector2 _colliderOffset;
     private Vector2 _colliderSize;
@@ -33,7 +34,7 @@ public class ScalingDecorator : ProximityDecorator {
             return;
         }
 
-        if (_isScaling)
+        if (_isScaling || AlwaysActive)
         {
             var alpha = BasicScale + Mathf.Sin(Time.time * PulsatingSpeed) / Amplitude;
             transform.localScale = Vector2.one * alpha;

@@ -75,6 +75,18 @@ public class Box : Pickable {
         {
             i.GetComponent<SpriteRenderer>().enabled = false;
         }
-        Destroy(transform.GetChild(0).GetComponent<Collider2D>());
+        Destroy(transform.GetChild(0).GetComponent<Collider2D>())
+    }
+
+    public bool HasIngredient(IngredientType type)
+    {
+        foreach(Ingredient i in Ingredients)
+        {
+            if (i.Type == type) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -17,6 +17,9 @@ public class BoxManager : MonoBehaviour {
     public int MinSameRecipe = 2;
     public int MaxSameRecipe = 4;
 
+    // Move out of here?
+    public int Score = 0;
+
     // Use this for initialization
     void Start () {
         recipes = new BoxRecipe[NumRecipes];
@@ -36,7 +39,30 @@ public class BoxManager : MonoBehaviour {
 
     public void ProccessBox(Box box)
     {
+        for (int i = 0; i < NumRecipes; i++)
+        {
+            if (ValidateBox(box, recipes[i]))
+            {
+                Score += 1;
+                return;
+            }
+        }
 
+        Score -= 1;
+        return;
+    }
+
+    public bool ValidateBox(Box box, BoxRecipe br)
+    {
+        foreach(IngredientType type in br.Bom)
+        {
+            if (!box.HasIngredient(type))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private BoxRecipe GenerateRecipe()

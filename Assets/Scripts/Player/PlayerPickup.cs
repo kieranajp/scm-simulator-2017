@@ -29,7 +29,6 @@ public class PlayerPickup : PlayerBehaviour {
         ingredient.PutDown();
         IsCarrying = false;
         pickedObject = null;
-        candidate = null;
     }
 
     private void PickUpObject(Pickable ingredient)

@@ -17,7 +17,7 @@ public class Timer : MonoBehaviour {
     void Start () {
         TimeLeft = RoundTime;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
         if (_isDone) { return; }
@@ -36,6 +36,10 @@ public class Timer : MonoBehaviour {
             var flash = Mathf.PingPong(Time.time * 10, 1);
             image.color = new Color(1, flash, flash);
         }
+    }
+
+    public void AddTime(float time) {
+        TimeLeft += time;
     }
 
     private void Reset()

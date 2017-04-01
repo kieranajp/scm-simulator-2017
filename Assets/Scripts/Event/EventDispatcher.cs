@@ -33,6 +33,6 @@ public class EventDispatcher : MonoBehaviour {
 	}
 
 	private RandomEvent ChooseEvent() {
-		return EventTypes [Random.Range (0, EventTypes.Count - 1)];
+		return EventTypes [Random.Range (0, EventTypes.Count)];
 	}
 }

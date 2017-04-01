@@ -44,9 +44,22 @@ public class BoxManager : MonoBehaviour {
         IngredientType[] ingredients = new IngredientType[IngredientsPerBox];
         Sprite[] sprites = new Sprite[IngredientsPerBox];
 
+        Dictionary<int, bool> usedIngredients = new Dictionary<int, bool>();
+
         for (int i = 0; i < IngredientsPerBox; i++)
         {
-            var index = Random.Range(0, IngredientTypes.Length);
+
+            int index;
+            while(true)
+            {
+                index = Random.Range(0, IngredientTypes.Length);
+                if (!usedIngredients.ContainsKey(index))
+                {
+                    usedIngredients.Add(index, true);
+                    break;
+                }
+            }
+
             ingredients[i] = IngredientTypes[index];
             sprites[i] = AllSprites[index];
         }

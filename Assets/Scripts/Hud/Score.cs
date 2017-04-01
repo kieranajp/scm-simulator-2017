@@ -9,14 +9,11 @@ public class Score : MonoBehaviour {
     public Image image;
     public float BaseFlash = 1;
 
-    public Color ShitOKColor = new Color(0, 1, 0);
-    public Color ShitNotOKColor = new Color(1, 0, 0);
-    public Color ShitColor = new Color(1, 1, 1);
-
-    public Color color = new Color(1, 1, 1);
+    public Color Color = new Color(1, 1, 1);
 
     private int prevScore;
-    private float flash = 0;
+    private float flashDuration = 0;
+    private bool positive = true;
 
     // Use this for initialization
     void Start () {
@@ -43,26 +40,28 @@ public class Score : MonoBehaviour {
         if (change)
         {
             text.text = prevScore.ToString();
-            flash = BaseFlash;
-            color = ShitNotOKColor;
-            if (plus)
-            {
-                color = ShitOKColor;
-            }
+            flashDuration = BaseFlash;
+            positive = plus;
         }
 
-        if(flash <= 0)
+        if (flashDuration <= 0)
         {
-            flash = 0;
-            image.color = ShitColor;
+            flashDuration = 0;
+            image.color = Color;
         }
         else
         { 
-            var f = Mathf.PingPong(flash * 10, 1);
-            var c = color;
-            c.a = f;
-            image.color = color;
-            flash -= Time.deltaTime;
+            var f = Mathf.PingPong(Time.time * 10, 1);
+            if (positive)
+            {
+                image.color = new Color(f, 1, f);
+            }
+            else
+            {
+                image.color = new Color(1, f, f);
+            }
+
+            flashDuration -= Time.deltaTime;
         }
     }
 }

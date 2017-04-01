@@ -25,6 +25,18 @@ public class Box : Pickable {
         Ingredients.Add(ingredient);
         ingredient.CanBePicked = false;
 
+
+        var decorators = ingredient.GetComponents<ProximityDecorator>();
+        foreach (var dec in decorators)
+        {
+            Destroy(dec);
+        }
+        var ingredientColliders = ingredient.GetComponents<Collider2D>();
+        foreach (var col in ingredientColliders)
+        {
+            Destroy(col);
+        }
+
         if (Ingredients.Count == MaximumIngredients)
         {
             CloseBox();
@@ -37,15 +49,5 @@ public class Box : Pickable {
         _isClosed = true;
         CanBePicked = true;
         Destroy(transform.GetChild(0).GetComponent<Collider2D>());
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-
     }
 }

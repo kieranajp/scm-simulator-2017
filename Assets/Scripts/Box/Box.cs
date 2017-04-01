@@ -12,6 +12,7 @@ public class Box : Pickable {
     private PlayerMovement movement;
     private float _originalSpeed;
     public GameObject AnimationThrow;
+    public bool HasBeenPicked;
 
     private void Start()
     {
@@ -54,6 +55,7 @@ public class Box : Pickable {
     public override void PickUp()
     {
         base.PickUp();
+        HasBeenPicked = true;
         GetComponent<SpriteRenderer>().sprite = carryingBox;
         GetComponent<SpriteRenderer>().sortingOrder = 4;
         movement.Speed = .66f * _originalSpeed;

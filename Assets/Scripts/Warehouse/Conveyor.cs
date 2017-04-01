@@ -16,20 +16,19 @@ public class Conveyor : MonoBehaviour {
     public GameObject[] Items;
     public int[] ItemsWeight;
 
+    public int[] itemsRecipeAppliedWeights;
+
     private int totalWeight = 0;
 
     public float lastSpawn;
 
     // Use this for initialization
     void Start () {
-		foreach(int weight in ItemsWeight)
-        {
-            totalWeight += weight;
-        }
         if(Items.Length != ItemsWeight.Length)
         {
             Debug.LogError("Conveyor Items and Itemsweight are not same length");
         }
+
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -39,7 +38,6 @@ public class Conveyor : MonoBehaviour {
         {
             this.items.Add(i);
         }
-
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -62,6 +60,31 @@ public class Conveyor : MonoBehaviour {
 
 	}
 
+    public void ApplyWeights(Dictionary<IngredientType, int> weights)
+    {
+        itemsRecipeAppliedWeights = new int[ItemsWeight.Length];
+
+        for(int i = 0; i < Items.Length; i++)
+        {
+            itemsRecipeAppliedWeights[i] = ItemsWeight[i];
+            Ingredient ingredient = Items[i].GetComponent<Ingredient>();
+            if(ingredient != null)
+            {
+                IngredientType type = ingredient.Type;
+                if (weights.ContainsKey(type))
+                {
+                    itemsRecipeAppliedWeights[i] = itemsRecipeAppliedWeights[i] + weights[type];
+                }
+            }
+        }
+        foreach (int weight in itemsRecipeAppliedWeights)
+        {
+
+            totalWeight += weight;
+
+        }
+    }
+
     void spawnIngredients(float delta)
     {
         lastSpawn -= delta;
@@ -70,11 +93,11 @@ public class Conveyor : MonoBehaviour {
             var rngnum = Random.Range(0, totalWeight);
 
             int i = 0;
-            int curWeight = ItemsWeight[0];
+            int curWeight = itemsRecipeAppliedWeights[0];
             while (rngnum > curWeight)
             {
                 i++;
-                curWeight += ItemsWeight[i];
+                curWeight += itemsRecipeAppliedWeights[i];
             }
 
 

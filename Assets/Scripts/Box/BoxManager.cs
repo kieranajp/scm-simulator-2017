@@ -30,6 +30,7 @@ public class BoxManager : MonoBehaviour {
             recipes[i] = GenerateRecipe(); 
             recipesLeft[i] = Random.Range(MinSameRecipe, MaxSameRecipe);
         }
+        ApplyWeights();
     }
 	
 	// Update is called once per frame
@@ -61,7 +62,9 @@ public class BoxManager : MonoBehaviour {
         {
             recipes[index] = GenerateRecipe();
             recipesLeft[index] = Random.Range(MinSameRecipe, MaxSameRecipe);
-        } 
+        }
+
+        ApplyWeights();
     }
     public bool ValidateBox(Box box, BoxRecipe br)
     {
@@ -111,5 +114,26 @@ public class BoxManager : MonoBehaviour {
     public int GetLeft(int index)
     {
         return recipesLeft[index];
+    }
+
+    private void ApplyWeights()
+    {
+        Dictionary<IngredientType, int> weights = new Dictionary<IngredientType, int>();
+        foreach(BoxRecipe br in recipes)
+        {
+            foreach(IngredientType it in br.Bom)
+            {
+                if (weights.ContainsKey(it))
+                {
+                    weights[it]++;
+                }
+                else
+                {
+                    weights.Add(it, 1);
+                }
+            }
+        }
+
+        FindObjectOfType<Conveyor>().ApplyWeights(weights);
     }
 }

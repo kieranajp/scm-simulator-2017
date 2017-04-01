@@ -9,6 +9,7 @@ public class ArrowDecorator : ProximityDecorator {
 
     private void Start()
     {
+        Arrow.SetActive(false);
         pickable = GetComponent<Pickable>();
     }
 

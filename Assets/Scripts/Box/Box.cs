@@ -9,10 +9,14 @@ public class Box : Pickable {
     public List<Ingredient> Ingredients;
     public List<Transform> SpawnPoints;
     private bool _isClosed;
+    private PlayerMovement movement;
+    private float _originalSpeed;
 
     private void Start()
     {
         CanBePicked = false;
+        movement = FindObjectOfType<PlayerMovement>();
+        _originalSpeed = movement.Speed;
     }
 
     public void AddIngredient(Ingredient ingredient)
@@ -51,6 +55,7 @@ public class Box : Pickable {
         base.PickUp();
         GetComponent<SpriteRenderer>().sprite = carryingBox;
         GetComponent<SpriteRenderer>().sortingOrder = 4;
+        movement.Speed = .66f * _originalSpeed;
     }
 
     public override void PutDown()
@@ -58,6 +63,7 @@ public class Box : Pickable {
         base.PutDown();
         GetComponent<SpriteRenderer>().sprite = closedBox;
         GetComponent<SpriteRenderer>().sortingOrder = 1;
+        movement.Speed = _originalSpeed;
     }
 
     public void CloseBox()

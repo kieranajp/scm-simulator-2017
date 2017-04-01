@@ -41,6 +41,8 @@ public class PlayerPickup : PlayerBehaviour {
 
     private void PickUpClosestObject(List<Pickable> ingredients)
     {
+        if (ingredients.Count == 0) return;
+
         var ingredient = ingredients.OrderBy((t) => { return (t.transform.position - transform.position).sqrMagnitude; }).First();
         if (ingredient != null && ingredient.CanBePicked) {
             ingredient.PickUp();

@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour {
     public float RoundTime = 45;
     public float TimeLeft = 0;
+    public float CriticalTime = 10;
 
     public Text text;
+    public Image image;
+
     private bool _isDone = false;
 
     // Use this for initialization
@@ -25,6 +28,13 @@ public class Timer : MonoBehaviour {
         {
             _isDone = true;
             gameObject.BroadcastMessage("OnTimerExpire");
+            return;
+        }
+
+        if (TimeLeft < CriticalTime)
+        {
+            var flash = Mathf.PingPong(Time.time * 10, 1);
+            image.color = new Color(1, flash, flash);
         }
     }
 

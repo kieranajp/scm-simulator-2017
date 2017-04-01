@@ -2,23 +2,25 @@
 using System.Linq;
 using UnityEngine;
 
-public class PlayerPickup : PlayerBehaviour {
+public class PlayerPickup : MonoBehaviour {
 
     public AudioClip PickupSound;
     public AudioClip PutDownSound;
     public Pickable PickedUpObject;
     public List<Pickable> candidates;
+    private PlayerBehaviour player;
 
     public bool IsCarrying = false;
 
     private void Start()
     {
         candidates = new List<Pickable>();
+        player = GetComponent<PlayerBehaviour>();
     }
 
     private void Update()
     {
-        if (PlayerInput.GetButtonDown("A", Player))
+        if (PlayerInput.GetButtonDown("A", player.Player))
         {
             if (PickedUpObject != null) {
                 PutDownObject();

@@ -7,9 +7,11 @@ public class PlayerAnimation : MonoBehaviour {
     public PlayerMovement Movement;
     public PlayerPickup Pickup;
     private Animator animator;
+    private PlayerBehaviour player;
 
     private void Start()
     {
+        player = GetComponent<PlayerBehaviour>();
         animator = GetComponent<Animator>();
     }
 
@@ -19,15 +21,15 @@ public class PlayerAnimation : MonoBehaviour {
 
         if (isMoving) {
             if (Pickup.IsCarrying) {
-                animator.Play("workerWalkHold");
+                animator.Play("workerWalkHold_" + player.Player.ToString().Substring(1, 1));
             } else {
-                animator.Play("workerWalk");
+                animator.Play("workerWalk_" + player.Player.ToString().Substring(1, 1));
             }
         } else {
             if (Pickup.IsCarrying) {
-                animator.Play("workerIdleHold");
+                animator.Play("workerIdleHold_" + player.Player.ToString().Substring(1, 1));
             } else {
-                animator.Play("workerIdle");
+                animator.Play("workerIdle_" + player.Player.ToString().Substring(1, 1));
             }
         }
 		

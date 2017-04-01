@@ -16,6 +16,7 @@ public class Box : Pickable {
 
     private void Start()
     {
+        FiveSecondRule = false;
         CanBePicked = false;
         movement = FindObjectOfType<PlayerMovement>();
         _originalSpeed = movement.Speed;

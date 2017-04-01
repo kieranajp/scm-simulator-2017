@@ -53,7 +53,7 @@ public class Timer : MonoBehaviour {
         } else {
             seconds = Mathf.CeilToInt(timeLeft);
         }
-        var str = string.Format(minutes.ToString().PadRight(2, '0') + ":" + seconds.ToString().PadRight(2, '0'));
+        var str = string.Format(minutes.ToString().PadLeft(2, '0') + ":" + seconds.ToString().PadLeft(2, '0'));
         return str;
     }
 }

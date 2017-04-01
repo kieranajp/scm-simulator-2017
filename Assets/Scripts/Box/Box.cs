@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Box : Pickable {
 
+    public Sprite carryingBox;
+    public Sprite closedBox;
     public int MaximumIngredients = 4;
     public List<Ingredient> Ingredients;
     public List<Transform> SpawnPoints;
@@ -44,10 +46,29 @@ public class Box : Pickable {
 
     }
 
+    public override void PickUp()
+    {
+        base.PickUp();
+        GetComponent<SpriteRenderer>().sprite = carryingBox;
+        GetComponent<SpriteRenderer>().sortingOrder = 4;
+    }
+
+    public override void PutDown()
+    {
+        base.PutDown();
+        GetComponent<SpriteRenderer>().sprite = closedBox;
+        GetComponent<SpriteRenderer>().sortingOrder = 1;
+    }
+
     public void CloseBox()
     {
         _isClosed = true;
         CanBePicked = true;
+        GetComponent<SpriteRenderer>().sprite = closedBox;
+        foreach (var i in Ingredients)
+        {
+            i.GetComponent<SpriteRenderer>().enabled = false;
+        }
         Destroy(transform.GetChild(0).GetComponent<Collider2D>());
     }
 }

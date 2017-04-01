@@ -15,17 +15,13 @@ public class ScalingDecorator : ProximityDecorator {
     private Vector2 _colliderSize;
     private BoxCollider2D _collider2d;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         pickable = GetComponent<Pickable>();
         _collider2d = GetComponent<BoxCollider2D>();
         _colliderOffset = _collider2d.offset;
         _colliderSize = _collider2d.size;
-
-        if (TriggerBody == null)
-        {
-            TriggerBody = FindObjectOfType<PlayerBehaviour>().gameObject;
-        }
 
         Glow();
     }

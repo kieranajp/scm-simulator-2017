@@ -9,9 +9,11 @@ public class Truck : Actionable {
         var pickup = collision.GetComponent<PlayerPickup>();
         if (pickup != null)
         {
-            if (pickup.PickedUpObject.GetComponent<Box>() != null)
+            var pickedUpObject = pickup.PickedUpObject;
+            if (pickedUpObject)
             {
                 pickup.PutDownObject();
+                //pickedUpObject.PutDown();
             }
         }
     }

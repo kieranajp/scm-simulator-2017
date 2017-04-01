@@ -44,7 +44,7 @@ public class PlayerPickup : PlayerBehaviour {
         if (ingredients.Count == 0) return;
 
         var ingredient = ingredients.OrderBy((t) => { return (t.transform.position - transform.position).sqrMagnitude; }).First();
-        if (ingredient != null && ingredient.CanBePicked) {
+        if (ingredient != null && ingredient.CanBePicked && !ingredient.IsPickedUp) {
             ingredient.PickUp();
             PickedUpObject = ingredient;
             IsCarrying = true;

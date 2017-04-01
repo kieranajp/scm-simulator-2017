@@ -8,8 +8,9 @@ public class ArrowDecorator : ProximityDecorator {
     public Vector3 Offset = new Vector3(0, 1f);
     private Pickable pickable;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         Arrow.SetActive(false);
         pickable = GetComponent<Pickable>();
     }

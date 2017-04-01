@@ -1,17 +1,31 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 abstract public class ProximityDecorator : MonoBehaviour {
 
-    public GameObject TriggerBody;
+    public List<GameObject> TriggerBodies = new List<GameObject>();
     protected bool inProximity = false;
+
+    virtual protected void Start()
+    {
+        if (TriggerBodies.Count == 0)
+        {
+            var playerMovements = FindObjectsOfType<PlayerMovement>();
+            foreach (var p in playerMovements)
+            {
+                TriggerBodies.Add(p.gameObject);
+            }
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var go = collision.gameObject;
-        if (TriggerBody == go || TriggerBody.transform.parent == go)
+        if (TriggerBodies.Contains(go))
         {
-            InProximity(TriggerBody);
+            InProximity(go);
             inProximity = true;
         }
     }
@@ -19,9 +33,9 @@ abstract public class ProximityDecorator : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D collision)
     {
         var go = collision.gameObject;
-        if (TriggerBody == go || TriggerBody.transform.parent == go)
+        if (TriggerBodies.Contains(go))
         {
-            OutOfProximity(TriggerBody);
+            OutOfProximity(go);
             inProximity = false;
         }
     }

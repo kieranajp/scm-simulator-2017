@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class RandomEvent {
+public abstract class RandomEvent : MonoBehaviour {
 
 	public abstract string Name {
 		get;

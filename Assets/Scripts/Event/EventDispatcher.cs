@@ -6,20 +6,18 @@ public class EventDispatcher : MonoBehaviour {
 
 	public float FirstEvent  = 10.0f;
 	public int   EventChance = 6;
-	public float EventTick   = 10.0f;
+	public float EventTick   = 5.0f;
 
-	protected List<RandomEvent> EventTypes;
+	public List<RandomEvent> EventTypes;
 
 	// Use this for initialization
 	void Start () {
-		EventTypes = new List<RandomEvent> ();
-
-		EventTypes.Add (new WarnarEvent ());
+		InvokeRepeating ("RollForEvent", FirstEvent, EventTick);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		InvokeRepeating ("RollForEvent", FirstEvent, EventTick);
+
 	}
 
 	// Attempt to make an event occur
@@ -27,6 +25,7 @@ public class EventDispatcher : MonoBehaviour {
 		var ShouldEventOccur = Random.Range (1, EventChance);
 
 		if (ShouldEventOccur == 1) {
+			Debug.Log ("Event occurring...");
 			var evt = ChooseEvent ();
 
 			evt.Fire ();

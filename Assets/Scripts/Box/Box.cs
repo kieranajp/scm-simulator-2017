@@ -33,6 +33,7 @@ public class Box : Pickable {
         ingredient.transform.position = SpawnPoints[Ingredients.Count].transform.position;
         Ingredients.Add(ingredient);
         ingredient.CanBePicked = false;
+        ingredient.FiveSecondRule = false;
 
 
         var decorators = ingredient.GetComponents<ProximityDecorator>();

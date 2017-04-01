@@ -38,7 +38,6 @@ public class TruckMovement : MonoBehaviour {
         }
 
         _isFinishedRolling = true;
-        Debug.Log("HERE");
     }
 
     private IEnumerator OpenDoor()

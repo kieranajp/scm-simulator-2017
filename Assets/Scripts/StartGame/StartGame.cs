@@ -22,6 +22,11 @@ public class StartGame : MonoBehaviour {
 
     private void Update()
     {
+        if (currentAnnouncement == Announcements.Length - 1)
+        {
+            FindObjectOfType<Camera>().GetComponent<AudioSource>().Play();
+        }
+
         if (currentAnnouncement == Announcements.Length) {
             announcement.text = "";
             Time.timeScale = 1;

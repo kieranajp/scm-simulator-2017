@@ -20,7 +20,7 @@ public class ArrowDecorator : ProximityDecorator {
             return;
         }
 
-        if (inProximity) { 
+        if (inProximity) {
             Arrow.SetActive(true);
             Arrow.transform.position = transform.position + Offset;
             var scaledValue = 1 + Mathf.PingPong(Time.time * 3, 1);

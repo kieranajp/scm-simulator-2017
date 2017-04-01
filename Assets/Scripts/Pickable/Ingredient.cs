@@ -4,7 +4,14 @@ public enum IngredientType
 {
     Carrot,
     Brocolli,
-    Banana
+    Banana,
+    Chicken,
+    Lime,
+    Meat,
+    Milk,
+    Pepper,
+    Spud,
+    Tomato
 }
 
 public class Ingredient : Pickable {

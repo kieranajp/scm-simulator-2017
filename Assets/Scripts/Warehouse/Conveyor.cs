@@ -6,6 +6,7 @@ public class Conveyor : MonoBehaviour {
     public Transform SpawnPoint;
 
     private HashSet<Ingredient> ingredients = new HashSet<Ingredient>();
+    private HashSet<Ingredient> takenOutIngredients = new HashSet<Ingredient>();
 
     public GameObject[] Ingredients;
 

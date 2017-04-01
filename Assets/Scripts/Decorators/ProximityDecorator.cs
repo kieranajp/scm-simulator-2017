@@ -8,8 +8,8 @@ abstract public class ProximityDecorator : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        var rigidbody2d = collision.gameObject;
-        if (TriggerBody == rigidbody2d)
+        var go = collision.gameObject;
+        if (TriggerBody == go || TriggerBody.transform.parent == go)
         {
             InProximity(TriggerBody);
             inProximity = true;
@@ -18,8 +18,8 @@ abstract public class ProximityDecorator : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        var rigidbody2d = collision.gameObject;
-        if (TriggerBody == rigidbody2d)
+        var go = collision.gameObject;
+        if (TriggerBody == go || TriggerBody.transform.parent == go)
         {
             OutOfProximity(TriggerBody);
             inProximity = false;

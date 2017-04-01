@@ -49,7 +49,7 @@ public class Conveyor : MonoBehaviour {
         {
             var i = Random.Range(0, Ingredients.Length);
             var pos = SpawnPoint.position;
-            pos.x += Random.Range(-1.0f, 1.0f);
+            pos.x += Random.Range(-.5f, .5f);
 
             GameObject.Instantiate(Ingredients[i], pos, new Quaternion());
             this.lastSpawn = Random.Range(2, 5);

@@ -4,17 +4,12 @@ using UnityEngine;
 
 public abstract class RandomEvent : MonoBehaviour {
 
-	public abstract string Name {
-		get;
-	}
+	public string Name = "Random";
 
-	public abstract string Avatar {
-		get;
-	}
+	public string Avatar = "random.jpg";
 
-	public abstract string Message {
-		get;
-	}
+	public string Message = "A random event occurred!";
 
 	public abstract void Fire ();
+
 }

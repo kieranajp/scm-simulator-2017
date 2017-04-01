@@ -84,7 +84,7 @@ public class Box : Pickable {
     public void ThrowBox()
     {
         FindObjectOfType<BoxManager>().ProccessBox(this);
-        this.PutDown();
+        PutDown();
         var obj = Instantiate(AnimationThrow, transform.position, Quaternion.identity);
         gameObject.SetActive(false);
         Destroy(obj, 1f);

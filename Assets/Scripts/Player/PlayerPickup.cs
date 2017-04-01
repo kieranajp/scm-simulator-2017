@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerPickup : PlayerBehaviour {
 
+    public AudioClip PickupSound;
+    public AudioClip PutDownSound;
     public Pickable PickedUpObject;
     public List<Pickable> candidates;
 
@@ -33,6 +35,7 @@ public class PlayerPickup : PlayerBehaviour {
 
     public void PutDownObject()
     {
+        AudioSource.PlayClipAtPoint(PutDownSound, FindObjectOfType<AudioSource>().transform.position);
         PickedUpObject.PutDown();
         candidates.Remove(PickedUpObject);
         IsCarrying = false;
@@ -48,6 +51,7 @@ public class PlayerPickup : PlayerBehaviour {
             ingredient.PickUp();
             PickedUpObject = ingredient;
             IsCarrying = true;
+            AudioSource.PlayClipAtPoint(PickupSound, FindObjectOfType<AudioSource>().transform.position);
         }
     }
 

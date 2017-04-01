@@ -44,6 +44,7 @@ public class BoxManager : MonoBehaviour {
             if (ValidateBox(box, recipes[i]))
             {
                 Score += 1;
+                RecipeComplete(i);
                 return;
             }
         }
@@ -52,6 +53,16 @@ public class BoxManager : MonoBehaviour {
         return;
     }
 
+    public void RecipeComplete(int index)
+    {
+        recipesLeft[index]--;
+
+        if(recipesLeft[index] <= 0)
+        {
+            recipes[index] = GenerateRecipe();
+            recipesLeft[index] = Random.Range(MinSameRecipe, MaxSameRecipe);
+        } 
+    }
     public bool ValidateBox(Box box, BoxRecipe br)
     {
         foreach(IngredientType type in br.Bom)

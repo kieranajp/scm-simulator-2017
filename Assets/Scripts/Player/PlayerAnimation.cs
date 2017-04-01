@@ -18,20 +18,20 @@ public class PlayerAnimation : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         var isMoving = Movement.Velocity.magnitude != 0;
+        var p = "player_" + player.Player.ToString().Substring(1, 1) + "_";
 
         if (isMoving) {
             if (Pickup.IsCarrying) {
-                animator.Play("workerWalkHold_" + player.Player.ToString().Substring(1, 1));
+                animator.Play(p + "WalkHold");
             } else {
-                animator.Play("workerWalk_" + player.Player.ToString().Substring(1, 1));
+                animator.Play(p + "Walk");
             }
         } else {
             if (Pickup.IsCarrying) {
-                animator.Play("workerIdleHold_" + player.Player.ToString().Substring(1, 1));
+                animator.Play(p + "IdleHold");
             } else {
-                animator.Play("workerIdle_" + player.Player.ToString().Substring(1, 1));
+                animator.Play(p + "Idle");
             }
         }
-		
 	}
 }

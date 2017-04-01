@@ -6,7 +6,7 @@ public class EventDispatcher : MonoBehaviour {
 
 	public float FirstEvent  = 10.0f;
 	public int   EventChance = 6;
-	public float EventTick   = 5.0f;
+	public float EventTick   = 7.0f;
 
 	public List<RandomEvent> EventTypes;
 

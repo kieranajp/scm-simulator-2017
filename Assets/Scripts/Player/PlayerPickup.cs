@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerPickup : PlayerBehaviour {
 
-    Pickable pickedObject;
+    public Pickable PickedUpObject;
     public List<Pickable> candidates;
 
     public bool IsCarrying = false;
@@ -18,8 +18,8 @@ public class PlayerPickup : PlayerBehaviour {
     {
         if (PlayerInput.GetButtonDown("A", Player))
         {
-            if (pickedObject != null) {
-                PutDownObject(pickedObject);
+            if (PickedUpObject != null) {
+                PutDownObject();
             } else {
                 PickUpClosestObject(candidates);
             }
@@ -27,26 +27,26 @@ public class PlayerPickup : PlayerBehaviour {
 
         if (IsCarrying)
         {
-            pickedObject.transform.position = transform.position + new Vector3(0, 0.5f);
+            PickedUpObject.transform.position = transform.position + new Vector3(0, 0.5f);
         }
     }
 
-    private void PutDownObject(Pickable ingredient)
+    public void PutDownObject()
     {
-        ingredient.PutDown();
-        candidates.Remove(ingredient);
+        PickedUpObject.PutDown();
+        candidates.Remove(PickedUpObject);
         IsCarrying = false;
-        pickedObject = null;
+        PickedUpObject = null;
     }
 
-    private void PickUpClosestObject(List<Pickable> ingredients)
+    public void PickUpClosestObject(List<Pickable> ingredients)
     {
         if (ingredients.Count == 0) return;
 
         var ingredient = ingredients.OrderBy((t) => { return (t.transform.position - transform.position).sqrMagnitude; }).First();
         if (ingredient != null && ingredient.CanBePicked) {
             ingredient.PickUp();
-            pickedObject = ingredient;
+            PickedUpObject = ingredient;
             IsCarrying = true;
         }
     }

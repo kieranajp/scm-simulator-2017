@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class Truck : Actionable {
     public AudioClip ThrowSound;
+
+    private void Update()
+    {
+        transform.localPosition += new Vector3(0, Mathf.Sin(Time.unscaledTime * 20) / 200);
+    }
+
     public override void DoAction(Collider2D collision)
     {
         var pickup = collision.GetComponent<PlayerPickup>();

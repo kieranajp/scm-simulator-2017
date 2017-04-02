@@ -18,10 +18,21 @@ public class AlvaroEvent : RandomEvent {
 			player.PutDownObject ();
 		}
 
+
+		var boxes = GameObject.FindObjectsOfType<Box> ();
+        foreach (var b in boxes) {
+            if (!b.CanBePicked)
+            {
+                b.EmptyBox();
+            }
+        }
+
 		var ingredients = GameObject.FindObjectsOfType<Ingredient> ();
 
 		foreach (var ingredient in ingredients) {
-			GameObject.Destroy(ingredient.gameObject, 0.5f);
+            GameObject.Destroy(ingredient.gameObject, 0.5f);
 		}
+
+
 	}
 }

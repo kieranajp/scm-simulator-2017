@@ -17,6 +17,7 @@ public class Truck : Actionable {
                 var box = pickedUpObject.GetComponent<Box>();
                 pickup.PutDownObject();
                 box.ThrowBox();
+                FindObjectOfType<BoxManager>().ProccessBox(pickup.GetComponent<PlayerBehaviour>().Player, box);
                 AudioSource.PlayClipAtPoint(ThrowSound, FindObjectOfType<AudioSource>().transform.position);
             }
         }

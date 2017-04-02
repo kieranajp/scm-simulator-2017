@@ -54,6 +54,19 @@ public class Box : Pickable {
 
     }
 
+    public void EmptyBox()
+    {
+        Ingredients.Clear();
+        var children = new List<GameObject>();
+        foreach (Transform child in transform) {
+            if (child.GetComponent<Ingredient>())
+            {
+                children.Add(child.gameObject);
+            }
+        };
+        children.ForEach(child => Destroy(child));
+    }
+
     public override void PickUp()
     {
         base.PickUp();
@@ -85,7 +98,6 @@ public class Box : Pickable {
 
     public void ThrowBox()
     {
-        FindObjectOfType<BoxManager>().ProccessBox(this);
         PutDown();
         var obj = Instantiate(AnimationThrow, transform.position, Quaternion.identity);
         gameObject.SetActive(false);

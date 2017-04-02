@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EndGame : MonoBehaviour {
 
@@ -9,6 +10,10 @@ public class EndGame : MonoBehaviour {
     public GameObject[] AnimateObjects;
     private Score score;
     private EventDispatcher eventDispatcher;
+    public Text[] goodBoxes;
+    public Text[] badBoxes;
+    public Text totalGoodBoxes;
+    public Text totalBadBoxes;
 
     private void Start()
     {
@@ -18,8 +23,25 @@ public class EndGame : MonoBehaviour {
 
     void OnTimerExpire()
     {
+        UpdateScores();
         FreezePlayers();
         StartCoroutine(AnimateBoard());
+    }
+
+    private void UpdateScores()
+    {
+        var players = FindObjectsOfType<PlayerBehaviour>();
+        var scores = FindObjectOfType<BoxManager>();
+
+        foreach (var p in players)
+        {
+            var pIndex = int.Parse(p.Player.ToString().Substring(1, 1)) - 1;
+            goodBoxes[pIndex].text = "x " + scores.playerGoods[pIndex].ToString();
+            badBoxes[pIndex].text = "x " + scores.playerWrongs[pIndex].ToString();
+        }
+
+        totalGoodBoxes.text = "x " + scores.totalGood;
+        totalBadBoxes.text = "x " + scores.totalBad;
     }
 
     private void FreezePlayers()

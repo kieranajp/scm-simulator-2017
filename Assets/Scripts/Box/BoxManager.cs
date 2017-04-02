@@ -6,6 +6,10 @@ public class BoxManager : MonoBehaviour {
 
     private BoxRecipe[] recipes;
     private int[] recipesLeft;
+    public int[] playerGoods;
+    public int[] playerWrongs;
+    public int totalGood = 0;
+    public int totalBad = 0;
 
     public IngredientType[] IngredientTypes;
     public Sprite[] AllSprites;
@@ -22,6 +26,8 @@ public class BoxManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        playerGoods = new int[4];
+        playerWrongs = new int[4];
         recipes = new BoxRecipe[NumRecipes];
         recipesLeft = new int[NumRecipes];
 
@@ -32,26 +38,26 @@ public class BoxManager : MonoBehaviour {
         }
         ApplyWeights();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-    public void ProccessBox(Box box)
+    public void ProccessBox(Player player, Box box)
     {
+        var pIndex = int.Parse(player.ToString().Substring(1, 1)) - 1;
+        Debug.Log(pIndex);
         for (int i = 0; i < NumRecipes; i++)
         {
             if (ValidateBox(box, recipes[i]))
             {
+                playerGoods[pIndex]++;
                 Score += 1;
                 RecipeComplete(i);
+                totalGood++;
                 return;
             }
         }
 
+        playerWrongs[pIndex]++;
         Score -= 1;
-        return;
+        totalBad++;
     }
 
     public void RecipeComplete(int index)

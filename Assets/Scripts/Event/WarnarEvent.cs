@@ -10,6 +10,12 @@ public class WarnarEvent : RandomEvent {
 	public override void Fire() {
 		ChangePlayersSpeed (Penalty);
         GetComponent<AudioSource>().Play();
+		var players = GameObject.FindObjectsOfType<PlayerMovement> ();
+
+		foreach (PlayerMovement player in players) {
+            player.GetComponent<SpriteRenderer>().color = Color.blue;
+		}
+
 		StartCoroutine ("ResetSpeed");
 	}
 
@@ -23,6 +29,12 @@ public class WarnarEvent : RandomEvent {
 
 	private IEnumerator ResetSpeed() {
 		yield return new WaitForSeconds (Duration);
+
+		var players = GameObject.FindObjectsOfType<PlayerMovement> ();
+
+		foreach (PlayerMovement player in players) {
+            player.GetComponent<SpriteRenderer>().color = Color.white;
+		}
 
 		ChangePlayersSpeed (Penalty * -1);
 	}

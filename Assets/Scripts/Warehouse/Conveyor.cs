@@ -8,6 +8,7 @@ public class Conveyor : MonoBehaviour {
     private HashSet<Pickable> items = new HashSet<Pickable>();
     private HashSet<Pickable> takenOutIngredients = new HashSet<Pickable>();
 
+    public Vector3 Direction = new Vector3(0, -1, 0);
     public float MinSpawnTime = 1;
     public float MaxSpawnTime = 2;
 
@@ -54,7 +55,7 @@ public class Conveyor : MonoBehaviour {
             if (i == null) {
                 continue;
             }
-            i.transform.Translate(new Vector3(0, -1 * Time.deltaTime * Speed, 0), Space.World);
+            i.transform.Translate(Direction * Time.deltaTime * Speed, Space.World);
         }
 
 	}

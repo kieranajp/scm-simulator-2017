@@ -10,6 +10,11 @@ public class EventDispatcher : MonoBehaviour {
 
 	public List<RandomEvent> EventTypes;
 
+    public void Stop()
+    {
+        CancelInvoke();
+    }
+
 	// Use this for initialization
 	void Start () {
 		InvokeRepeating ("RollForEvent", FirstEvent, EventTick);

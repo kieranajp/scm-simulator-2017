@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class EndGame : MonoBehaviour {
 
+    public AudioClip gameOver;
     public float AnimationSpeed = 0.2f;
     public GameObject[] AnimateObjects;
     private Score score;
@@ -23,6 +24,8 @@ public class EndGame : MonoBehaviour {
 
     void OnTimerExpire()
     {
+        FindObjectOfType<Camera>().GetComponent<AudioSource>().clip = gameOver;
+        FindObjectOfType<Camera>().GetComponent<AudioSource>().Play();
         UpdateScores();
         FreezePlayers();
         StartCoroutine(AnimateBoard());
@@ -46,11 +49,12 @@ public class EndGame : MonoBehaviour {
 
     private void FreezePlayers()
     {
+        eventDispatcher.Stop();
         eventDispatcher.enabled = false;
         var players = GameObject.FindObjectsOfType<PlayerMovement>();
         foreach(var p in players)
         {
-            p.Speed = 0;
+            p.Stop();
             Destroy(p);
         }
     }

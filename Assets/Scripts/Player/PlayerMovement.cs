@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour {
     public AudioClip footstepSound;
     private AudioSource source;
     private PlayerBehaviour player;
+    private bool _isStopped;
 
     private void Start()
     {
@@ -18,16 +19,25 @@ public class PlayerMovement : MonoBehaviour {
         player = GetComponent<PlayerBehaviour>();
     }
 
-    void FixedUpdate () {
-        var horizontal = PlayerInput.GetAxis("Horizontal", player.Player) * Speed;
-        var vertical = PlayerInput.GetAxis("Vertical", player.Player) * Speed;
-        Velocity = new Vector2(horizontal, vertical);
-        rb.velocity = Velocity;
+    public void Stop()
+    {
+        _isStopped = true;
+        rb.velocity = Vector2.zero;
+    }
 
-        if (Velocity.magnitude < 0.1f) {
-            source.volume = 0;
-        } else {
-            source.volume = 0.2f;
+    void FixedUpdate () {
+        if (!_isStopped)
+        {
+            var horizontal = PlayerInput.GetAxis("Horizontal", player.Player) * Speed;
+            var vertical = PlayerInput.GetAxis("Vertical", player.Player) * Speed;
+            Velocity = new Vector2(horizontal, vertical);
+            rb.velocity = Velocity;
+
+            if (Velocity.magnitude < 0.1f) {
+                source.volume = 0;
+            } else {
+                source.volume = 0.2f;
+            }
         }
     }
 

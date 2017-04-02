@@ -42,7 +42,6 @@ public class BoxManager : MonoBehaviour {
     public void ProccessBox(Player player, Box box)
     {
         var pIndex = int.Parse(player.ToString().Substring(1, 1)) - 1;
-        Debug.Log(pIndex);
         for (int i = 0; i < NumRecipes; i++)
         {
             if (ValidateBox(box, recipes[i]))

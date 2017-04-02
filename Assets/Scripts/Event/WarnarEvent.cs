@@ -9,7 +9,7 @@ public class WarnarEvent : RandomEvent {
 
 	public override void Fire() {
 		ChangePlayersSpeed (Penalty);
-
+        GetComponent<AudioSource>().Play();
 		StartCoroutine ("ResetSpeed");
 	}
 

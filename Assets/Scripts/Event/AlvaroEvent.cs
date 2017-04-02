@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 public class AlvaroEvent : RandomEvent {
 
-	public string Name    = "Alvaro";
-	public string Avatar  = "alvaro.jpg";
-	public string Message = "Alvaro deployed something. #_CRITICAL!!";
-
 	public float Delay = 3.0f;
 
 	public override void Fire() {
-		Debug.Log (string.Format("Firing {0}!", Name));
-
 		StartCoroutine ("DestroyAllIngredients");
 	}
 		

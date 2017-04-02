@@ -14,25 +14,18 @@ public class EventDispatcher : MonoBehaviour {
 	void Start () {
 		InvokeRepeating ("RollForEvent", FirstEvent, EventTick);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
 
 	// Attempt to make an event occur
 	private void RollForEvent() {
 		var ShouldEventOccur = Random.Range (1, EventChance);
 
 		if (ShouldEventOccur == 1) {
-			Debug.Log ("Event occurring...");
 			var evt = ChooseEvent ();
 
 			evt.Fire ();
             var listeners = GameObject.FindGameObjectsWithTag("EventListener");
             foreach (var listener in listeners)
             {
-                Debug.Log(listener);
                 listener.BroadcastMessage("OnEventFired", evt);
             }
 		}

@@ -28,7 +28,6 @@ public class Conveyor : MonoBehaviour {
         {
             Debug.LogError("Conveyor Items and Itemsweight are not same length");
         }
-
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour {
         if (Velocity.magnitude < 0.1f) {
             source.volume = 0;
         } else {
-            source.volume = 1;
+            source.volume = 0.2f;
         }
     }
 

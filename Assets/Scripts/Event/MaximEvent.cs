@@ -18,10 +18,28 @@ public class MaximEvent : RandomEvent {
 		foreach (PlayerMovement player in players) {
 			player.Speed += value;
 		}
+
+        for (var i = 0; i < players.Length; i++)
+        {
+            for (var j = 0; j < players.Length; j++)
+            {
+                Physics2D.IgnoreCollision(players[i].GetComponent<Collider2D>(), players[j].GetComponent<Collider2D>());
+            }
+        }
 	}
 
 	private IEnumerator ResetSpeed() {
 		yield return new WaitForSeconds (Duration);
+
+		var players = GameObject.FindObjectsOfType<PlayerMovement> ();
+
+        for (var i = 0; i < players.Length; i++)
+        {
+            for (var j = 0; j < players.Length; j++)
+            {
+                Physics2D.IgnoreCollision(players[i].GetComponent<Collider2D>(), players[j].GetComponent<Collider2D>(), false);
+            }
+        }
 
 		ChangePlayersSpeed (Boost * -1);
 	}

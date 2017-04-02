@@ -27,7 +27,11 @@ public class Timer : MonoBehaviour {
         if (TimeLeft < 0)
         {
             _isDone = true;
-            gameObject.BroadcastMessage("OnTimerExpire", SendMessageOptions.DontRequireReceiver);
+            var gameobjects = GameObject.FindGameObjectsWithTag("TimerExpire");
+            foreach (var g in gameobjects)
+            {
+                g.BroadcastMessage("OnTimerExpire");
+            }
             return;
         }
 
@@ -50,13 +54,14 @@ public class Timer : MonoBehaviour {
 
     private string GenerateTime(float timeLeft)
     {
-        var minutes = (int)(timeLeft / 60);
+        var minutes = Mathf.CeilToInt(timeLeft) / 60;
         var seconds = 0;
         if (minutes != 0) {
             seconds = Mathf.CeilToInt(timeLeft - minutes * 60);
         } else {
             seconds = Mathf.CeilToInt(timeLeft);
         }
+        seconds %= 60;
         var str = string.Format(minutes.ToString().PadLeft(2, '0') + ":" + seconds.ToString().PadLeft(2, '0'));
         return str;
     }

@@ -17,7 +17,6 @@ public class Floor : MonoBehaviour {
     // Use this for initialization
     void Start () {
         basicColor = floorTexture.color;
-        flashDuration = Duration;
 	}
 	
 	// Update is called once per frame

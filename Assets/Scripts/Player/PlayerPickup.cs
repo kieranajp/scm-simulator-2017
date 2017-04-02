@@ -37,6 +37,9 @@ public class PlayerPickup : MonoBehaviour {
 
     public void PutDownObject()
     {
+        if (! IsCarrying) {
+            return;
+        }
         AudioSource.PlayClipAtPoint(PutDownSound, FindObjectOfType<AudioSource>().transform.position);
         PickedUpObject.PutDown();
         candidates.Remove(PickedUpObject);

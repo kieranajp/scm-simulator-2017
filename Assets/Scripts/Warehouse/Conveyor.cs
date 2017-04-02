@@ -77,6 +77,7 @@ public class Conveyor : MonoBehaviour {
                 }
             }
         }
+        totalWeight = 0;
         foreach (int weight in itemsRecipeAppliedWeights)
         {
 

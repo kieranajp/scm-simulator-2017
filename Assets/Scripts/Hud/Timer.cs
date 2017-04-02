@@ -34,7 +34,7 @@ public class Timer : MonoBehaviour {
         if (TimeLeft < CriticalTime)
         {
             var flash = Mathf.PingPong(Time.time * 10, 1);
-            image.color = new Color(1, flash, flash);
+            image.color = new Color(1, 0, 0, flash);
         }
     }
 

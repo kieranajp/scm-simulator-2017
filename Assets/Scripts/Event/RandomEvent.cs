@@ -6,7 +6,7 @@ public abstract class RandomEvent : MonoBehaviour {
 
 	public string Name = "Random";
 
-	public string Avatar = "random.jpg";
+    public Sprite Avatar;
 
 	public string Message = "A random event occurred!";
 

@@ -7,10 +7,6 @@ public class MaximEvent : RandomEvent {
 	public float Boost    = 2.0f;
 	public float Duration = 5.0f;
 
-	public string Name    = "Maxim";		
-	public string Avatar  = "maxim.jpg";
-	public string Message = "01110100 01100011 01110000 01100100 01110101 01101101 01110000";
-
 	public override void Fire() {
 		Debug.Log (string.Format("Firing {0}!", Name));
 

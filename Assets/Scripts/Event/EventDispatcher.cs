@@ -29,6 +29,12 @@ public class EventDispatcher : MonoBehaviour {
 			var evt = ChooseEvent ();
 
 			evt.Fire ();
+            var listeners = GameObject.FindGameObjectsWithTag("EventListener");
+            foreach (var listener in listeners)
+            {
+                Debug.Log(listener);
+                listener.BroadcastMessage("OnEventFired", evt);
+            }
 		}
 	}
 

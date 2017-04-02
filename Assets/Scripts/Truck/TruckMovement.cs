@@ -18,6 +18,12 @@ public class TruckMovement : MonoBehaviour {
         StartCoroutine(OpenDoor());
 	}
 
+	void OnTimerExpire () {
+        _curSeconds = 0;
+        StartCoroutine(CloseDoor());
+        StartCoroutine(Deliver());
+	}
+
     private void Update()
     {
         if (_isFinishedRolling)
@@ -36,8 +42,6 @@ public class TruckMovement : MonoBehaviour {
             wheel.transform.localPosition = Vector3.Lerp(wheel.transform.localPosition, targetPosition, Time.unscaledDeltaTime * 2);
             _curSeconds += Time.unscaledDeltaTime;
         }
-
-        _isFinishedRolling = true;
     }
 
     private IEnumerator OpenDoor()
@@ -53,6 +57,28 @@ public class TruckMovement : MonoBehaviour {
 
             yield return null;
         }
+    }
+
+    private IEnumerator Deliver()
+    {
+        yield return new WaitForSeconds(1);
+        while (_curSeconds < 3)
+        {
+            yield return null;
+            lorry.transform.localPosition += new Vector3(-Time.unscaledDeltaTime, 0, 0);
+            wheel.transform.localPosition += new Vector3(-Time.unscaledDeltaTime, 0, 0);
+            _curSeconds += Time.unscaledDeltaTime;
+        }
+    }
+
+    private IEnumerator CloseDoor()
+    {
+        while (door.transform.localScale.x > 0.05f)
+        {
+            door.transform.localScale = new Vector3(door.transform.localScale.x - Time.unscaledDeltaTime, 1, 1);
+            yield return null;
+        }
+        door.transform.localScale = Vector3.zero;
     }
 
 }

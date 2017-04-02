@@ -20,6 +20,7 @@ public class BoxManager : MonoBehaviour {
 
     public int MinSameRecipe = 2;
     public int MaxSameRecipe = 4;
+    public int WinningScore = 3;
 
     // Move out of here?
     public int Score = 0;

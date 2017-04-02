@@ -7,6 +7,8 @@ public class RocketEvent : RandomEvent {
 	public override void Fire() {
 		var timer = GameObject.FindObjectOfType<Timer> ();
 
+        FindObjectOfType<Floor>().GoCrazy(2, 1);
+
 		timer.AddTime (Extension);
 	}
 }

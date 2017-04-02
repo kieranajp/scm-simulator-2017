@@ -15,6 +15,9 @@ public class EndGame : MonoBehaviour {
     public Text[] badBoxes;
     public Text totalGoodBoxes;
     public Text totalBadBoxes;
+    public Image status;
+    public Sprite winningSprite;
+    public Sprite lostSprite;
 
     private void Start()
     {
@@ -45,6 +48,15 @@ public class EndGame : MonoBehaviour {
 
         totalGoodBoxes.text = "x " + scores.totalGood;
         totalBadBoxes.text = "x " + scores.totalBad;
+
+        if (scores.totalGood >= 3)
+        {
+            status.sprite = winningSprite;
+        } else
+        {
+            status.color = Color.red;
+            status.sprite = lostSprite;
+        }
     }
 
     private void FreezePlayers()

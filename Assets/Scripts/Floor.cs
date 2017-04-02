@@ -35,7 +35,7 @@ public class Floor : MonoBehaviour {
         }
 	}
 
-    void GoCrazy (float duration, float s)
+    public void GoCrazy (float duration, float s)
     {
         speed = s;
         flashDuration = duration;

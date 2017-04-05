@@ -1,61 +1,63 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-[RequireComponent(typeof(Pickable))]
-[RequireComponent(typeof(SpriteRenderer))]
-public class GlowDecorator : ProximityDecorator {
+namespace Decorators
+{
+    [RequireComponent(typeof(Pickable))]
+    [RequireComponent(typeof(SpriteRenderer))]
+    public class GlowDecorator : ProximityDecorator {
 
-    private Pickable pickable;
-    private SpriteRenderer spriteRenderer;
-    private bool _isGlowing;
+        private Pickable _pickable;
+        private SpriteRenderer _spriteRenderer;
+        private bool _isGlowing;
 
-    private void Start()
-    {
-        pickable = GetComponent<Pickable>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    private void Update()
-    {
-        if (pickable.IsPickedUp) {
-            Normalize();
-            return;
+        protected override void Start()
+        {
+            _pickable = GetComponent<Pickable>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
-        if (inProximity) {
+        private void Update()
+        {
+            if (_pickable.IsPickedUp) {
+                Normalize();
+                return;
+            }
+
+            if (inProximity) {
+                Glow();
+            }
+
+            if (_isGlowing)
+            {
+                var alpha = 0.75f + Mathf.Sin(Time.time * 5) / 4;
+                Debug.Log("Glowing " + alpha);
+                _spriteRenderer.color = new Color(1, 1, 1, alpha);
+            }
+        }
+
+        private void Normalize()
+        {
+            _spriteRenderer.color = new Color(1, 1, 1, 1);
+        }
+
+        private void Glow()
+        {
+            _isGlowing = true;
+        }
+
+        private void Hide()
+        {
+            _isGlowing = false;
+        }
+
+        public override void InProximity(GameObject go)
+        {
             Glow();
         }
 
-        if (_isGlowing)
+        public override void OutOfProximity(GameObject go)
         {
-            var alpha = 0.75f + Mathf.Sin(Time.time * 5) / 4;
-            Debug.Log("Glowing " + alpha);
-            spriteRenderer.color = new Color(1, 1, 1, alpha);
+            Hide();
         }
-    }
-
-    private void Normalize()
-    {
-        spriteRenderer.color = new Color(1, 1, 1, 1);
-    }
-
-    private void Glow()
-    {
-        _isGlowing = true;
-    }
-
-    private void Hide()
-    {
-        _isGlowing = false;
-    }
-
-    public override void InProximity(GameObject gameObject)
-    {
-        Glow();
-    }
-
-    public override void OutOfProximity(GameObject gameObject)
-    {
-        Hide();
     }
 }

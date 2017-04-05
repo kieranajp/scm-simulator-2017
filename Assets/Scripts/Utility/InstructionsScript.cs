@@ -1,21 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InstructionsScript : MonoBehaviour {
+namespace Utility
+{
+    public class InstructionsScript : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+        private void Start () {
 		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
-        if (Input.anyKey)
-        {
-            SceneManager.LoadScene("Level_1");
         }
-	}
+	
+        private void Update () {
+
+            if (Input.anyKey)
+            {
+                SceneManager.LoadScene("Level_1");
+            }
+        }
+    }
 }

@@ -12,12 +12,6 @@ public class AlvaroEvent : RandomEvent {
 	private IEnumerator DestroyAllIngredients() {
 		yield return new WaitForSeconds (Delay);
 
-		var players = GameObject.FindObjectsOfType<PlayerPickup> ();
-
-		foreach (var player in players) {
-			player.PutDownObject ();
-		}
-
 
 		var boxes = GameObject.FindObjectsOfType<Box> ();
         foreach (var b in boxes) {
@@ -30,6 +24,10 @@ public class AlvaroEvent : RandomEvent {
 		var ingredients = GameObject.FindObjectsOfType<Ingredient> ();
 
 		foreach (var ingredient in ingredients) {
+            if (ingredient.IsPickedUp)
+            {
+                continue;
+            }
             GameObject.Destroy(ingredient.gameObject, 0.5f);
 		}
 

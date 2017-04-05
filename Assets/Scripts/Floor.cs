@@ -1,43 +1,39 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Floor : MonoBehaviour {
 
-    public RawImage floorTexture;
+    public RawImage FloorTexture;
 
     public float Duration = 10;
-    public float flashDuration = 0;
+    public float FlashDuration;
 
-    private float speed = 1;
-    private Color basicColor;
+    private float _speed = 1;
+    private Color _basicColor;
 
-    // Use this for initialization
-    void Start () {
-        basicColor = floorTexture.color;
+    private void Start () {
+        _basicColor = FloorTexture.color;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if(flashDuration >= 0)
+    private void Update () {
+		if(FlashDuration >= 0)
         {
-            float r = Mathf.PingPong(Time.time * (speed + 1), 1);
-            float g = Mathf.PingPong(Time.time * (speed + 2), 1);
-            float b = Mathf.PingPong(Time.time * (speed + 3), 1);
-            floorTexture.color = new Color(r, g, b);
-            flashDuration -= Time.deltaTime;
+            var r = Mathf.PingPong(Time.time * (_speed + 1), 1);
+            var g = Mathf.PingPong(Time.time * (_speed + 2), 1);
+            var b = Mathf.PingPong(Time.time * (_speed + 3), 1);
+            FloorTexture.color = new Color(r, g, b);
+            FlashDuration -= Time.deltaTime;
         }
         else
         {
-            floorTexture.color = basicColor;
+            FloorTexture.color = _basicColor;
         }
 	}
 
     public void GoCrazy (float duration, float s)
     {
-        speed = s;
-        flashDuration = duration;
+        _speed = s;
+        FlashDuration = duration;
     }
 }

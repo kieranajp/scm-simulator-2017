@@ -1,50 +1,51 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NotificationManager : MonoBehaviour {
+namespace Utility
+{
+    public class NotificationManager : MonoBehaviour {
 
-    public Image Avatar;
-    public Text Title;
+        public Image Avatar;
+        public Text Title;
 
-    public RandomEvent[] Events;
-    private bool _wasFired;
-    private float _duration = 4f;
-    private float _time = 0;
-    private RectTransform self;
+        public RandomEvent[] Events;
+        private bool _wasFired;
+        private const float Duration = 4f;
+        private RectTransform _self;
 
-    public void OnEventFired(RandomEvent e) {
-        self = GetComponent<RectTransform>();
-        Title.text = e.Message;
-        Avatar.sprite = e.Avatar;
-        StopAllCoroutines();
-        StartCoroutine(Show());
-    }
-
-    private IEnumerator Show()
-    {
-        while (self.localScale.y < 1)
-        {
-            self.localScale = new Vector3(1, Mathf.Lerp(self.localScale.y, 1.1f, Time.deltaTime * 3), 1);
-            yield return null;
+        public void OnEventFired(RandomEvent e) {
+            _self = GetComponent<RectTransform>();
+            Title.text = e.Message;
+            Avatar.sprite = e.Avatar;
+            StopAllCoroutines();
+            StartCoroutine(Show());
         }
 
-        self.localScale = new Vector3(1, 1, 1);
-        yield return new WaitForSeconds(_duration);
-        yield return Hide();
-    }
-
-    private IEnumerator Hide()
-    {
-
-        while (self.localScale.y > 0)
+        private IEnumerator Show()
         {
-            yield return null;
-            self.localScale = new Vector3(1, Mathf.Lerp(self.localScale.y, -0.1f, Time.deltaTime * 3), 1);
+            while (_self.localScale.y < 1)
+            {
+                _self.localScale = new Vector3(1, Mathf.Lerp(_self.localScale.y, 1.1f, Time.deltaTime * 3), 1);
+                yield return null;
+            }
+
+            _self.localScale = new Vector3(1, 1, 1);
+            yield return new WaitForSeconds(Duration);
+            yield return Hide();
         }
 
-        self.localScale = new Vector3(1, 0, 1);
-    }
+        private IEnumerator Hide()
+        {
 
+            while (_self.localScale.y > 0)
+            {
+                yield return null;
+                _self.localScale = new Vector3(1, Mathf.Lerp(_self.localScale.y, -0.1f, Time.deltaTime * 3), 1);
+            }
+
+            _self.localScale = new Vector3(1, 0, 1);
+        }
+
+    }
 }

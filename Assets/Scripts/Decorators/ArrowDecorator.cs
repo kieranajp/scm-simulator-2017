@@ -38,12 +38,12 @@ public class ArrowDecorator : ProximityDecorator {
         Arrow.SetActive(false);
     }
 
-    public override void InProximity(GameObject gameObject)
+    public override void InProximity(GameObject go)
     {
         Arrow.SetActive(true);
     }
 
-    public override void OutOfProximity(GameObject gameObject)
+    public override void OutOfProximity(GameObject go)
     {
         Arrow.SetActive(false);
     }

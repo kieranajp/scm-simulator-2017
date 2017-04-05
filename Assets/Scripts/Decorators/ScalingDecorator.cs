@@ -61,12 +61,12 @@ public class ScalingDecorator : ProximityDecorator {
         _isScaling = false;
     }
 
-    public override void InProximity(GameObject gameObject)
+    public override void InProximity(GameObject go)
     {
         Glow();
     }
 
-    public override void OutOfProximity(GameObject gameObject)
+    public override void OutOfProximity(GameObject go)
     {
         Hide();
     }

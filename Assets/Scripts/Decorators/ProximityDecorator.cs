@@ -40,6 +40,6 @@ abstract public class ProximityDecorator : MonoBehaviour {
         }
     }
 
-    abstract public void InProximity(GameObject gameObject);
-    abstract public void OutOfProximity(GameObject gameObject);
+    abstract public void InProximity(GameObject go);
+    abstract public void OutOfProximity(GameObject go);
 }

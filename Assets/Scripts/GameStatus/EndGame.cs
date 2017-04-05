@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EndGame : MonoBehaviour {
 
-    public AudioClip gameOver;
+    public AudioClip GameOver;
     public float AnimationSpeed = 0.2f;
     public GameObject[] AnimateObjects;
-    private Score score;
-    private EventDispatcher eventDispatcher;
-    public Text[] goodBoxes;
-    public Text[] badBoxes;
-    public Text totalGoodBoxes;
-    public Text totalBadBoxes;
-    public Image status;
-    public Sprite winningSprite;
-    public Sprite lostSprite;
-    private bool _canSkip = false;
+    private EventDispatcher _eventDispatcher;
+    public Text[] GoodBoxes;
+    public Text[] BadBoxes;
+    public Text TotalGoodBoxes;
+    public Text TotalBadBoxes;
+    public Image Status;
+    public Sprite WinningSprite;
+    public Sprite LostSprite;
+    private bool _canSkip;
 
     private void Start()
     {
-        score = FindObjectOfType<Score>();
-        eventDispatcher = FindObjectOfType<EventDispatcher>();
+        _eventDispatcher = FindObjectOfType<EventDispatcher>();
     }
 
     private void Update()
@@ -35,9 +31,9 @@ public class EndGame : MonoBehaviour {
         }
     }
 
-    void OnTimerExpire()
+    private void OnTimerExpire()
     {
-        FindObjectOfType<Camera>().GetComponent<AudioSource>().clip = gameOver;
+        FindObjectOfType<Camera>().GetComponent<AudioSource>().clip = GameOver;
         FindObjectOfType<Camera>().GetComponent<AudioSource>().loop = false;
         FindObjectOfType<Camera>().GetComponent<AudioSource>().Play();
         UpdateScores();
@@ -52,27 +48,27 @@ public class EndGame : MonoBehaviour {
 
         foreach (var p in players)
         {
-            var pIndex = int.Parse(p.Player.ToString().Substring(1, 1)) - 1;
-            goodBoxes[pIndex].text = "x " + scores.playerGoods[pIndex].ToString();
-            badBoxes[pIndex].text = "x " + scores.playerWrongs[pIndex].ToString();
+            var pIndex = (int) p.Player - 1;
+            GoodBoxes[pIndex].text = "x " + scores.playerGoods[pIndex];
+            BadBoxes[pIndex].text = "x " + scores.playerWrongs[pIndex];
         }
 
-        totalGoodBoxes.text = "x " + scores.totalGood;
-        totalBadBoxes.text = "x " + scores.totalBad;
+        TotalGoodBoxes.text = "x " + scores.totalGood;
+        TotalBadBoxes.text = "x " + scores.totalBad;
 
         if (scores.totalGood >= 3) {
-            status.sprite = winningSprite;
+            Status.sprite = WinningSprite;
         } else {
-            status.color = Color.red;
-            status.sprite = lostSprite;
+            Status.color = Color.red;
+            Status.sprite = LostSprite;
         }
     }
 
     private void FreezePlayers()
     {
-        eventDispatcher.Stop();
-        eventDispatcher.enabled = false;
-        var players = GameObject.FindObjectsOfType<PlayerMovement>();
+        _eventDispatcher.Stop();
+        _eventDispatcher.enabled = false;
+        var players = FindObjectsOfType<PlayerMovement>();
         foreach(var p in players)
         {
             p.Stop();

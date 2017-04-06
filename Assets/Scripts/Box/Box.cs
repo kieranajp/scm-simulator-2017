@@ -84,7 +84,7 @@ namespace Box
                 var animator = i.AddComponent<Animator>();
                 animator.enabled = true;
                 animator.runtimeAnimatorController = ItemThrowerAnimator;
-                animator.Play("Throw" + Random.Range(1, 3));
+                animator.Play("Throw" + Random.Range(1, 4));
             }
             yield return new WaitForSeconds(0.3f);
             foreach (var i in ingredients)

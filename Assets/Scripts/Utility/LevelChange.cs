@@ -3,7 +3,10 @@ using UnityEngine.SceneManagement;
 
 namespace Utility
 {
-    public class InstructionsScript : MonoBehaviour {
+    public class LevelChange : MonoBehaviour
+    {
+
+        public string NextLevel = "Menu";
 
         private void Start () {
 		
@@ -13,7 +16,7 @@ namespace Utility
 
             if (Input.anyKey)
             {
-                SceneManager.LoadScene("Level_1");
+                SceneManager.LoadScene(NextLevel);
             }
         }
     }

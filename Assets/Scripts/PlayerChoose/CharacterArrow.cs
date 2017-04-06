@@ -18,7 +18,8 @@ namespace PlayerChoose
         {
             _originalPosition = GetComponent<RectTransform>().anchoredPosition;
             _characters = FindObjectOfType<CharacterPool>().CharacterInstances;
-            CurrentCharacter = (int) PlayerController;
+            CurrentCharacter = Game.PlayerCharacters[PlayerController];
+            ChangePosition(CurrentCharacter);
         }
 
         public void SelectPlayer()
@@ -26,9 +27,10 @@ namespace PlayerChoose
             var zeroIndexCharacter = CurrentCharacter - 1;
             var selectedCharacter = _characters[zeroIndexCharacter];
             selectedCharacter.GetComponent<Character>().IsSelected = true;
-            selectedCharacter.GetComponentInChildren<Animator>().Stop();
+            selectedCharacter.GetComponentInChildren<Animator>().enabled = false;
             selectedCharacter.GetComponentInChildren<Image>().color = new Color(0.25f, 0.25f, 0.25f);
             IsSelected = true;
+            FindObjectOfType<SelectScreen>().PlayerSelected();
             StartCoroutine(AnimateArrow());
             Game.SetCharacter(PlayerController, zeroIndexCharacter);
         }

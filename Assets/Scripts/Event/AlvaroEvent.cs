@@ -1,36 +1,37 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class AlvaroEvent : RandomEvent {
+namespace Event
+{
+    public class AlvaroEvent : RandomEvent
+    {
+        public GameObject Explosion;
+        public float Delay = 3.0f;
 
-	public float Delay = 3.0f;
-
-	public override void Fire() {
-		StartCoroutine ("DestroyAllIngredients");
-	}
+        public override void Fire() {
+            StartCoroutine ("DestroyAllIngredients");
+        }
 		
-	private IEnumerator DestroyAllIngredients() {
-		yield return new WaitForSeconds (Delay);
+        private IEnumerator DestroyAllIngredients() {
+            yield return new WaitForSeconds (Delay);
 
+            var ingredients = FindObjectsOfType<Ingredient> ();
 
-		var boxes = GameObject.FindObjectsOfType<Box.Box> ();
-        foreach (var b in boxes) {
-            if (!b.CanBePicked)
-            {
-                b.EmptyBox();
+            foreach (var ingredient in ingredients) {
+                if (ingredient.IsPickedUp || !ingredient.CanBePicked)
+                {
+                    continue;
+                }
+                ingredient.Explode(Explosion);
+            }
+
+            var boxes = FindObjectsOfType<Box.Box> ();
+            foreach (var b in boxes) {
+                if (!b.CanBePicked)
+                {
+                    b.EmptyBox();
+                }
             }
         }
-
-		var ingredients = GameObject.FindObjectsOfType<Ingredient> ();
-
-		foreach (var ingredient in ingredients) {
-            if (ingredient.IsPickedUp)
-            {
-                continue;
-            }
-            GameObject.Destroy(ingredient.gameObject, 0.5f);
-		}
-
-
-	}
+    }
 }

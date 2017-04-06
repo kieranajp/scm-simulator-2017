@@ -2,17 +2,17 @@
 
 namespace Decorators
 {
-    [RequireComponent(typeof(Pickable))]
+    [RequireComponent(typeof(Pickable.Pickable))]
     [RequireComponent(typeof(SpriteRenderer))]
     public class GlowDecorator : ProximityDecorator {
 
-        private Pickable _pickable;
+        private Pickable.Pickable _pickable;
         private SpriteRenderer _spriteRenderer;
         private bool _isGlowing;
 
         protected override void Start()
         {
-            _pickable = GetComponent<Pickable>();
+            _pickable = GetComponent<Pickable.Pickable>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
         }
 

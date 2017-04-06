@@ -14,7 +14,7 @@ public enum IngredientType
     Tomato
 }
 
-public class Ingredient : Pickable {
+public class Ingredient : Pickable.Pickable {
     public IngredientType Type;
 
     override public void PutDown()

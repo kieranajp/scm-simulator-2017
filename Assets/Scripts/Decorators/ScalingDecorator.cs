@@ -1,11 +1,11 @@
 ﻿using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Pickable))]
+[RequireComponent(typeof(Pickable.Pickable))]
 [RequireComponent(typeof(BoxCollider2D))]
 public class ScalingDecorator : ProximityDecorator {
 
-    private Pickable pickable;
+    private Pickable.Pickable pickable;
     private bool _isScaling;
     public float PulsatingSpeed = 5f;
     public float Amplitude = 1f;
@@ -19,7 +19,7 @@ public class ScalingDecorator : ProximityDecorator {
     protected override void Start()
     {
         base.Start();
-        pickable = GetComponent<Pickable>();
+        pickable = GetComponent<Pickable.Pickable>();
         _collider2d = GetComponent<BoxCollider2D>();
         _colliderOffset = _collider2d.offset;
         _colliderSize = _collider2d.size;

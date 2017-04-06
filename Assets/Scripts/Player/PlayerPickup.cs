@@ -1,81 +1,82 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Player;
 using UnityEngine;
 using Utility;
 
-public class PlayerPickup : MonoBehaviour {
+namespace Player
+{
+    public class PlayerPickup : MonoBehaviour {
 
-    public AudioClip PickupSound;
-    public AudioClip PutDownSound;
-    public Pickable PickedUpObject;
-    public List<Pickable> candidates;
-    private PlayerBehaviour player;
+        public AudioClip PickupSound;
+        public AudioClip PutDownSound;
+        public Pickable.Pickable PickedUpObject;
+        public List<Pickable.Pickable> Candidates;
+        private PlayerBehaviour _playerBehaviour;
 
-    public bool IsCarrying = false;
+        public bool IsCarrying;
 
-    private void Start()
-    {
-        candidates = new List<Pickable>();
-        player = GetComponent<PlayerBehaviour>();
-    }
-
-    private void Update()
-    {
-        if (PlayerInput.GetButtonDown("A", player.Player))
+        private void Start()
         {
-            if (PickedUpObject != null) {
-                PutDownObject();
-            } else {
-                PickUpClosestObject(candidates);
+            Candidates = new List<Pickable.Pickable>();
+            _playerBehaviour = GetComponent<PlayerBehaviour>();
+        }
+
+        private void Update()
+        {
+            if (PlayerInput.GetButtonDown("A", _playerBehaviour.Player))
+            {
+                if (PickedUpObject != null) {
+                    PutDownObject();
+                } else {
+                    PickUpClosestObject(Candidates);
+                }
+            }
+
+            if (IsCarrying)
+            {
+                PickedUpObject.transform.position = transform.position + new Vector3(0, 0.5f);
             }
         }
 
-        if (IsCarrying)
+        public void PutDownObject()
         {
-            PickedUpObject.transform.position = transform.position + new Vector3(0, 0.5f);
+            if (! IsCarrying) {
+                return;
+            }
+            AudioSource.PlayClipAtPoint(PutDownSound, FindObjectOfType<AudioSource>().transform.position);
+            PickedUpObject.PutDown();
+            Candidates.Remove(PickedUpObject);
+            IsCarrying = false;
+            PickedUpObject = null;
         }
-    }
 
-    public void PutDownObject()
-    {
-        if (! IsCarrying) {
-            return;
-        }
-        AudioSource.PlayClipAtPoint(PutDownSound, FindObjectOfType<AudioSource>().transform.position);
-        PickedUpObject.PutDown();
-        candidates.Remove(PickedUpObject);
-        IsCarrying = false;
-        PickedUpObject = null;
-    }
-
-    public void PickUpClosestObject(List<Pickable> ingredients)
-    {
-        if (ingredients.Count == 0) return;
-
-        var ingredient = ingredients.OrderBy((t) => { return (t.transform.position - transform.position).sqrMagnitude; }).First();
-        if (ingredient != null && ingredient.CanBePicked && !ingredient.IsPickedUp) {
-            ingredient.PickUp();
-            PickedUpObject = ingredient;
-            IsCarrying = true;
-            AudioSource.PlayClipAtPoint(PickupSound, FindObjectOfType<AudioSource>().transform.position);
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        var pickables = collision.GetComponents<Pickable>();
-        candidates = new List<Pickable>(pickables);
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        var pickables = collision.GetComponents<Pickable>();
-        if (pickables != null)
+        public void PickUpClosestObject(List<Pickable.Pickable> ingredients)
         {
+            if (ingredients.Count == 0) return;
+
+            var ingredient = ingredients.OrderBy(t => (t.transform.position - transform.position).sqrMagnitude).First();
+            if (ingredient != null && ingredient.CanBePicked && !ingredient.IsPickedUp && ingredient.enabled) {
+                ingredient.PickUp();
+                PickedUpObject = ingredient;
+                IsCarrying = true;
+                AudioSource.PlayClipAtPoint(PickupSound, FindObjectOfType<AudioSource>().transform.position);
+            }
+        }
+
+        private void OnTriggerStay2D(Collider2D collision)
+        {
+            var pickables = collision.GetComponents<Pickable.Pickable>();
+            Candidates = new List<Pickable.Pickable>(pickables);
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            var pickables = collision.GetComponents<Pickable.Pickable>();
+            if (pickables == null) return;
+
             foreach (var p in pickables)
             {
-                candidates.Remove(p);
+                Candidates.Remove(p);
             }
         }
     }

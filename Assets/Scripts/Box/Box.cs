@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Player;
+using UnityEditor;
+using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Box
 {
-    public class Box : Pickable {
+    public class Box : Pickable.Pickable {
 
         public Sprite CarryingBox;
         public Sprite ClosedBox;
@@ -16,10 +19,10 @@ namespace Box
         private float _originalSpeed;
         public GameObject AnimationThrow;
         public bool HasBeenPicked;
+        public AnimatorController ItemThrowerAnimator;
 
         private void Start()
         {
-            FiveSecondRule = false;
             CanBePicked = false;
             _movement = FindObjectOfType<PlayerMovement>();
             _originalSpeed = _movement.Speed;
@@ -42,12 +45,12 @@ namespace Box
             var decorators = ingredient.GetComponents<ProximityDecorator>();
             foreach (var dec in decorators)
             {
-                Destroy(dec);
+                dec.enabled = false;
             }
             var ingredientColliders = ingredient.GetComponents<Collider2D>();
             foreach (var col in ingredientColliders)
             {
-                Destroy(col);
+                col.enabled = false;
             }
 
             if (Ingredients.Count == MaximumIngredients)
@@ -67,7 +70,37 @@ namespace Box
                     children.Add(child.gameObject);
                 }
             }
-            children.ForEach(Destroy);
+            StartCoroutine(ThrowIngredients(children));
+        }
+
+        private IEnumerator ThrowIngredients(List<GameObject> ingredients)
+        {
+            foreach (var i in ingredients)
+            {
+                var container = new GameObject("_container");
+                container.transform.position = i.transform.position;
+                i.GetComponent<Ingredient>().enabled = false;
+                i.transform.parent = container.transform;
+                var animator = i.AddComponent<Animator>();
+                animator.enabled = true;
+                animator.runtimeAnimatorController = ItemThrowerAnimator;
+                animator.Play("Throw" + Random.Range(1, 3));
+            }
+            yield return new WaitForSeconds(0.3f);
+            foreach (var i in ingredients)
+            {
+                var ing = i.GetComponent<Ingredient>();
+                ing.CanBePicked = true;
+                ing.FiveSecondRule = true;
+                ing.IsPickedUp = false;
+                ing.enabled = true;
+                var obj = i.transform.parent;
+                i.GetComponent<Collider2D>().enabled = true;
+                i.GetComponent<ProximityDecorator>().enabled = true;
+                i.transform.parent = null;
+                Destroy(i.GetComponent<Animator>());
+                Destroy(obj.gameObject);
+            }
         }
 
         public override void PickUp()

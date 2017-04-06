@@ -6,7 +6,7 @@ namespace Warehouse
     public class Conveyor : MonoBehaviour {
         public Transform SpawnPoint;
 
-        private HashSet<Pickable> _items = new HashSet<Pickable>();
+        private HashSet<Pickable.Pickable> _items = new HashSet<Pickable.Pickable>();
 
         public Vector3 Direction = new Vector3(0, -1, 0);
         public float MinSpawnTime = 1;
@@ -32,7 +32,7 @@ namespace Warehouse
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            var i = collision.GetComponent<Pickable>();
+            var i = collision.GetComponent<Pickable.Pickable>();
             if (i != null)
             {
                 _items.Add(i);
@@ -41,7 +41,7 @@ namespace Warehouse
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            var i = collision.GetComponent<Pickable>();
+            var i = collision.GetComponent<Pickable.Pickable>();
             _items.Remove(i);
 
         }

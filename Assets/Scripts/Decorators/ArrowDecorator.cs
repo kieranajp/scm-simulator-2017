@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-[RequireComponent(typeof(Pickable))]
+[RequireComponent(typeof(Pickable.Pickable))]
 public class ArrowDecorator : ProximityDecorator {
 
     public GameObject Arrow;
     public Vector3 Offset = new Vector3(0, 1f);
-    private Pickable pickable;
+    private Pickable.Pickable pickable;
     public bool AlwaysActive = false;
 
     protected override void Start()
     {
         base.Start();
         Arrow.SetActive(false);
-        pickable = GetComponent<Pickable>();
+        pickable = GetComponent<Pickable.Pickable>();
         Arrow = Instantiate(Arrow, transform);
         Arrow.SetActive(false);
     }

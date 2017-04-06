@@ -25,14 +25,13 @@ namespace Player
             _rb.velocity = Vector2.zero;
         }
 
-        void FixedUpdate () {
-            if (!_isStopped)
-            {
-                var horizontal = PlayerInput.GetAxis("Horizontal", _player.Player) * Speed;
-                var vertical = PlayerInput.GetAxis("Vertical", _player.Player) * Speed;
-                Velocity = new Vector2(horizontal, vertical);
-                _rb.velocity = Velocity;
-            }
+        private void FixedUpdate () {
+            if (_isStopped) return;
+
+            var horizontal = PlayerInput.GetAxis("Horizontal", _player.Player) * Speed;
+            var vertical = PlayerInput.GetAxis("Vertical", _player.Player) * Speed;
+            Velocity = new Vector2(horizontal, vertical);
+            _rb.velocity = Velocity;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)

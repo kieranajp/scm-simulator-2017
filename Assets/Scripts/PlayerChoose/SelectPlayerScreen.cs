@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SelectPlayerScreen : MonoBehaviour {
 
-    public static Dictionary<Player, int> SelectedCharacters = new Dictionary<Player, int>();
+    public static Dictionary<Player.Player, int> SelectedCharacters = new Dictionary<Player.Player, int>();
 
     private void Start()
     {
@@ -17,7 +17,7 @@ public class SelectPlayerScreen : MonoBehaviour {
         }
     }
 
-    public static void SelectCharacter(Player playerController, int currentPlayer)
+    public static void SelectCharacter(Player.Player playerController, int currentPlayer)
     {
         SelectedCharacters.Add(playerController, currentPlayer);
     }

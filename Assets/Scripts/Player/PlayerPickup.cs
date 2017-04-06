@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Player;
 using UnityEngine;
+using Utility;
 
 public class PlayerPickup : MonoBehaviour {
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using Player;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour {

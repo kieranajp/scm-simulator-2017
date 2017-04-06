@@ -8,9 +8,11 @@ namespace PlayerChoose
     {
         [Description("Characters per row")] public int Columns = 4;
         public GameObject[] Characters;
+        public GameObject[] CharacterInstances;
 
         private void Start()
         {
+            CharacterInstances = new GameObject[Characters.Length];
             for (var i = 0; i < Characters.Length; i++)
             {
                 InstantiateCharacter(Characters[i], i);
@@ -37,6 +39,7 @@ namespace PlayerChoose
 
             character.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 1);
             character.GetComponent<RectTransform>().anchoredPosition = new Vector2(x, y);
+            CharacterInstances[position] = character;
         }
     }
 }

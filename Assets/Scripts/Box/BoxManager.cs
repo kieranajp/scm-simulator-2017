@@ -41,7 +41,7 @@ public class BoxManager : MonoBehaviour {
         ApplyWeights();
     }
 
-    public void ProccessBox(Player player, Box box)
+    public void ProccessBox(Player.Player player, Box box)
     {
         var pIndex = int.Parse(player.ToString().Substring(1, 1)) - 1;
         for (int i = 0; i < NumRecipes; i++)

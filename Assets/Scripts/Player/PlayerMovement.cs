@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Player;
+using UnityEngine;
+using Utility;
 
 public class PlayerMovement : MonoBehaviour {
 

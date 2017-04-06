@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 
-public enum CharacterName
+namespace PlayerChoose
 {
-    Richard,
-    Cristina,
-    Olivier,
-    Worker
-}
+    public enum CharacterName
+    {
+        Richard,
+        Cristina,
+        Olivier,
+        Worker
+    }
 
-public class Character : MonoBehaviour
-{
-    public CharacterName Name;
+    public class Character : MonoBehaviour
+    {
+        public bool IsSelected;
+        public CharacterName Name;
+    }
 }

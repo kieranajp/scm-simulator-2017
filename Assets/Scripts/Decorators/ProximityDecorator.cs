@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Player;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]

@@ -1,50 +1,46 @@
-﻿using Player;
-using UnityEngine;
+﻿using UnityEngine;
 using Utility;
 
-public class PlayerMovement : MonoBehaviour {
+namespace Player
+{
+    public class PlayerMovement : MonoBehaviour {
 
-    public float Speed;
-    private Rigidbody2D rb;
-    public Vector2 Velocity;
-    public AudioClip bump;
-    public AudioClip footstepSound;
-    private AudioSource source;
-    private PlayerBehaviour player;
-    private bool _isStopped;
+        public float Speed;
+        private Rigidbody2D _rb;
+        public Vector2 Velocity;
+        public AudioClip Bump;
+        private PlayerBehaviour _player;
+        private bool _isStopped;
 
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        Velocity = new Vector2();
-        source = GetComponent<AudioSource>();
-        player = GetComponent<PlayerBehaviour>();
-    }
-
-    public void Stop()
-    {
-        _isStopped = true;
-        rb.velocity = Vector2.zero;
-    }
-
-    void FixedUpdate () {
-        if (!_isStopped)
+        private void Start()
         {
-            var horizontal = PlayerInput.GetAxis("Horizontal", player.Player) * Speed;
-            var vertical = PlayerInput.GetAxis("Vertical", player.Player) * Speed;
-            Velocity = new Vector2(horizontal, vertical);
-            rb.velocity = Velocity;
+            _rb = GetComponent<Rigidbody2D>();
+            Velocity = new Vector2();
+            _player = GetComponent<PlayerBehaviour>();
+        }
 
-            if (Velocity.magnitude < 0.1f) {
-                source.volume = 0;
-            } else {
-                source.volume = 0.2f;
+        public void Stop()
+        {
+            _isStopped = true;
+            _rb.velocity = Vector2.zero;
+        }
+
+        void FixedUpdate () {
+            if (!_isStopped)
+            {
+                var horizontal = PlayerInput.GetAxis("Horizontal", _player.Player) * Speed;
+                var vertical = PlayerInput.GetAxis("Vertical", _player.Player) * Speed;
+                Velocity = new Vector2(horizontal, vertical);
+                _rb.velocity = Velocity;
             }
         }
-    }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        AudioSource.PlayClipAtPoint(bump, FindObjectOfType<AudioSource>().transform.position);
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                AudioSource.PlayClipAtPoint(Bump, FindObjectOfType<AudioSource>().transform.position);
+            }
+        }
     }
 }

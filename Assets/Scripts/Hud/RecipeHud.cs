@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Box;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Hud

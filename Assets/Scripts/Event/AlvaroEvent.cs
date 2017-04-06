@@ -13,7 +13,7 @@ public class AlvaroEvent : RandomEvent {
 		yield return new WaitForSeconds (Delay);
 
 
-		var boxes = GameObject.FindObjectsOfType<Box> ();
+		var boxes = GameObject.FindObjectsOfType<Box.Box> ();
         foreach (var b in boxes) {
             if (!b.CanBePicked)
             {

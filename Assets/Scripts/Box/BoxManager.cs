@@ -1,146 +1,146 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Warehouse;
 
-public class BoxManager : MonoBehaviour {
+namespace Box
+{
+    public class BoxManager : MonoBehaviour {
 
-    private BoxRecipe[] recipes;
-    private int[] recipesLeft;
-    public int[] playerGoods;
-    public int[] playerWrongs;
-    public int totalGood = 0;
-    public int totalBad = 0;
+        private BoxRecipe[] _recipes;
+        private int[] _recipesLeft;
+        public int[] PlayerGoods;
+        public int[] PlayerWrongs;
+        public int TotalGood;
+        public int TotalBad;
 
-    public IngredientType[] IngredientTypes;
-    public Sprite[] AllSprites;
+        public IngredientType[] IngredientTypes;
+        public Sprite[] AllSprites;
 
-    public int IngredientsPerBox = 4;
+        public int IngredientsPerBox = 4;
 
-    public int NumRecipes = 2;
+        public int NumRecipes = 2;
 
-    public int MinSameRecipe = 2;
-    public int MaxSameRecipe = 4;
-    public int WinningScore = 3;
+        public int MinSameRecipe = 2;
+        public int MaxSameRecipe = 4;
+        public int WinningScore = 3;
 
-    // Move out of here?
-    public int Score = 0;
+        public int Score;
 
-    // Use this for initialization
-    void Start () {
-        playerGoods = new int[4];
-        playerWrongs = new int[4];
-        recipes = new BoxRecipe[NumRecipes];
-        recipesLeft = new int[NumRecipes];
+        void Start () {
+            PlayerGoods = new int[4];
+            PlayerWrongs = new int[4];
+            _recipes = new BoxRecipe[NumRecipes];
+            _recipesLeft = new int[NumRecipes];
 
-        for (int i = 0; i < NumRecipes; i++)
-        {
-            recipes[i] = GenerateRecipe(); 
-            recipesLeft[i] = Random.Range(MinSameRecipe, MaxSameRecipe);
-        }
-        ApplyWeights();
-    }
-
-    public void ProccessBox(Player.Player player, Box box)
-    {
-        var pIndex = int.Parse(player.ToString().Substring(1, 1)) - 1;
-        for (int i = 0; i < NumRecipes; i++)
-        {
-            if (ValidateBox(box, recipes[i]))
+            for (int i = 0; i < NumRecipes; i++)
             {
-                playerGoods[pIndex]++;
-                Score += 1;
-                RecipeComplete(i);
-                totalGood++;
-                return;
+                _recipes[i] = GenerateRecipe();
+                _recipesLeft[i] = Random.Range(MinSameRecipe, MaxSameRecipe);
             }
+            ApplyWeights();
         }
 
-        playerWrongs[pIndex]++;
-        Score -= 1;
-        totalBad++;
-    }
-
-    public void RecipeComplete(int index)
-    {
-        recipesLeft[index]--;
-
-        if(recipesLeft[index] <= 0)
+        public void ProccessBox(Player.Player player, Box box)
         {
-            recipes[index] = GenerateRecipe();
-            recipesLeft[index] = Random.Range(MinSameRecipe, MaxSameRecipe);
-        }
-
-        ApplyWeights();
-    }
-    public bool ValidateBox(Box box, BoxRecipe br)
-    {
-        foreach(IngredientType type in br.Bom)
-        {
-            if (!box.HasIngredient(type))
+            var pIndex = int.Parse(player.ToString().Substring(1, 1)) - 1;
+            for (int i = 0; i < NumRecipes; i++)
             {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private BoxRecipe GenerateRecipe()
-    {
-        IngredientType[] ingredients = new IngredientType[IngredientsPerBox];
-        Sprite[] sprites = new Sprite[IngredientsPerBox];
-
-        Dictionary<int, bool> usedIngredients = new Dictionary<int, bool>();
-
-        for (int i = 0; i < IngredientsPerBox; i++)
-        {
-
-            int index;
-            while(true)
-            {
-                index = Random.Range(0, IngredientTypes.Length);
-                if (!usedIngredients.ContainsKey(index))
+                if (ValidateBox(box, _recipes[i]))
                 {
-                    usedIngredients.Add(index, true);
-                    break;
+                    PlayerGoods[pIndex]++;
+                    Score += 1;
+                    RecipeComplete(i);
+                    TotalGood++;
+                    return;
                 }
             }
 
-            ingredients[i] = IngredientTypes[index];
-            sprites[i] = AllSprites[index];
+            PlayerWrongs[pIndex]++;
+            Score -= 1;
+            TotalBad++;
         }
-        return new BoxRecipe(ingredients, sprites);
-    }
 
-    public BoxRecipe GetRecipe(int index)
-    {
-        return recipes[index];
-    }
-
-    public int GetLeft(int index)
-    {
-        return recipesLeft[index];
-    }
-
-    private void ApplyWeights()
-    {
-        Dictionary<IngredientType, int> weights = new Dictionary<IngredientType, int>();
-        foreach(BoxRecipe br in recipes)
+        public void RecipeComplete(int index)
         {
-            foreach(IngredientType it in br.Bom)
+            _recipesLeft[index]--;
+
+            if(_recipesLeft[index] <= 0)
             {
-                if (weights.ContainsKey(it))
+                _recipes[index] = GenerateRecipe();
+                _recipesLeft[index] = Random.Range(MinSameRecipe, MaxSameRecipe);
+            }
+
+            ApplyWeights();
+        }
+        public bool ValidateBox(Box box, BoxRecipe br)
+        {
+            foreach(IngredientType type in br.Bom)
+            {
+                if (!box.HasIngredient(type))
                 {
-                    weights[it]++;
-                }
-                else
-                {
-                    weights.Add(it, 1);
+                    return false;
                 }
             }
+
+            return true;
         }
 
-        FindObjectOfType<Conveyor>().ApplyWeights(weights);
+        private BoxRecipe GenerateRecipe()
+        {
+            IngredientType[] ingredients = new IngredientType[IngredientsPerBox];
+            Sprite[] sprites = new Sprite[IngredientsPerBox];
+
+            Dictionary<int, bool> usedIngredients = new Dictionary<int, bool>();
+
+            for (int i = 0; i < IngredientsPerBox; i++)
+            {
+
+                int index;
+                while(true)
+                {
+                    index = Random.Range(0, IngredientTypes.Length);
+                    if (!usedIngredients.ContainsKey(index))
+                    {
+                        usedIngredients.Add(index, true);
+                        break;
+                    }
+                }
+
+                ingredients[i] = IngredientTypes[index];
+                sprites[i] = AllSprites[index];
+            }
+            return new BoxRecipe(ingredients, sprites);
+        }
+
+        public BoxRecipe GetRecipe(int index)
+        {
+            return _recipes[index];
+        }
+
+        public int GetLeft(int index)
+        {
+            return _recipesLeft[index];
+        }
+
+        private void ApplyWeights()
+        {
+            Dictionary<IngredientType, int> weights = new Dictionary<IngredientType, int>();
+            foreach(BoxRecipe br in _recipes)
+            {
+                foreach(IngredientType it in br.Bom)
+                {
+                    if (weights.ContainsKey(it))
+                    {
+                        weights[it]++;
+                    }
+                    else
+                    {
+                        weights.Add(it, 1);
+                    }
+                }
+            }
+
+            FindObjectOfType<Conveyor>().ApplyWeights(weights);
+        }
     }
 }

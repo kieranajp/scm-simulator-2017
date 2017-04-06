@@ -23,7 +23,7 @@ public class Ingredient : Pickable {
         var colliders = Physics2D.OverlapCircleAll(transform.position, 1f);
         foreach (Collider2D c in colliders)
         {
-            var box = c.GetComponent<Box>();
+            var box = c.GetComponent<Box.Box>();
             if (box != null)
             {
                 box.AddIngredient(this);

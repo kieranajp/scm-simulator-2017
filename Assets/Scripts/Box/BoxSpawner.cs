@@ -9,11 +9,11 @@ public class BoxSpawner : MonoBehaviour {
     public float SpawnDelay = 3f;
     public float delay = 0;
 
-    private Box currentBox;
+    private Box.Box currentBox;
 
     // Use this for initialization
     void Start () {
-        currentBox = Instantiate(Box, transform.position, Quaternion.identity).GetComponent<Box>();
+        currentBox = Instantiate(Box, transform.position, Quaternion.identity).GetComponent<Box.Box>();
     }
 	
 	// Update is called once per frame
@@ -24,7 +24,7 @@ public class BoxSpawner : MonoBehaviour {
         }
 
 		if (delay > SpawnDelay) {
-            currentBox = Instantiate(Box, transform.position, Quaternion.identity).GetComponent<Box>();
+            currentBox = Instantiate(Box, transform.position, Quaternion.identity).GetComponent<Box.Box>();
             delay = 0f;
         }
 	}

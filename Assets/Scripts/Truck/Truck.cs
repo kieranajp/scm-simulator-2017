@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Box;
 using Player;
 using UnityEngine;
 
@@ -13,9 +14,9 @@ public class Truck : Actionable {
         if (pickup != null)
         {
             var pickedUpObject = pickup.PickedUpObject;
-            if (pickedUpObject && pickedUpObject.GetComponent<Box>() != null)
+            if (pickedUpObject && pickedUpObject.GetComponent<Box.Box>() != null)
             {
-                var box = pickedUpObject.GetComponent<Box>();
+                var box = pickedUpObject.GetComponent<Box.Box>();
                 pickup.PutDownObject();
                 box.ThrowBox();
                 FindObjectOfType<BoxManager>().ProccessBox(pickup.GetComponent<PlayerBehaviour>().Player, box);

@@ -4,7 +4,6 @@ namespace Box
 {
     public class BoxRecipe
     {
-
         public IngredientType[] Bom;
         public Sprite[] BomSprites;
 
@@ -14,6 +13,5 @@ namespace Box
             Bom = types;
             BomSprites = sprites;
         }
-
     }
 }

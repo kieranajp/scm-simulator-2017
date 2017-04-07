@@ -1,14 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Player;
-using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Box
 {
-    public class Box : Pickable.Pickable {
-
+    public class Box : Pickable.Pickable
+    {
         public Sprite CarryingBox;
         public Sprite ClosedBox;
         public int MaximumIngredients = 4;
@@ -57,14 +56,14 @@ namespace Box
             {
                 CloseBox();
             }
-
         }
 
         public void EmptyBox()
         {
             Ingredients.Clear();
             var children = new List<GameObject>();
-            foreach (Transform child in transform) {
+            foreach (Transform child in transform)
+            {
                 if (child.GetComponent<Ingredient>())
                 {
                     children.Add(child.gameObject);
@@ -142,9 +141,10 @@ namespace Box
 
         public bool HasIngredient(IngredientType type)
         {
-            foreach(Ingredient i in Ingredients)
+            foreach (Ingredient i in Ingredients)
             {
-                if (i.Type == type) {
+                if (i.Type == type)
+                {
                     return true;
                 }
             }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GameStatus;
 using UnityEngine;
 using Warehouse;
 
@@ -52,6 +53,11 @@ namespace Box
                     Score += 1;
                     RecipeComplete(i);
                     TotalGood++;
+
+                    if (Score == WinningScore)
+                    {
+                        FindObjectOfType<EndGame>().Finish();
+                    }
                     return;
                 }
             }
@@ -59,6 +65,7 @@ namespace Box
             PlayerWrongs[pIndex]++;
             Score -= 1;
             TotalBad++;
+
         }
 
         public void RecipeComplete(int index)
@@ -130,11 +137,22 @@ namespace Box
             {
                 foreach (IngredientType it in br.Bom)
                 {
-                    if (weights.ContainsKey(it))
+                    if (!weights.ContainsKey(it))
+                    {
+                        weights.Add(it, 1);
+                    }
+                    else
                     {
                         weights[it]++;
                     }
-                    else
+                }
+            }
+
+            foreach (var it in IngredientTypes)
+            {
+                if (!weights.ContainsKey(it))
+                {
+                    if (Random.Range(0f, 1f) > 0.5f)
                     {
                         weights.Add(it, 1);
                     }

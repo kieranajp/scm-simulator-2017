@@ -10,6 +10,7 @@ namespace GameStatus
 {
     public class EndGame : MonoBehaviour {
 
+        private bool _isFinished = false;
         public AudioClip GameOver;
         public float AnimationSpeed = 0.2f;
         public GameObject[] AnimateObjects;
@@ -36,15 +37,24 @@ namespace GameStatus
             }
         }
 
+        public void Finish()
+        {
+            if (!_isFinished)
+            {
+                FindObjectOfType<Camera>().GetComponent<AudioSource>().clip = GameOver;
+                FindObjectOfType<Camera>().GetComponent<AudioSource>().loop = false;
+                FindObjectOfType<Camera>().GetComponent<AudioSource>().Play();
+                UpdateScores();
+                FreezePlayers();
+                StartCoroutine(AnimateBoard());
+            }
+            _isFinished = true;
+        }
+
         [UsedImplicitly]
         private void OnTimerExpire()
         {
-            FindObjectOfType<Camera>().GetComponent<AudioSource>().clip = GameOver;
-            FindObjectOfType<Camera>().GetComponent<AudioSource>().loop = false;
-            FindObjectOfType<Camera>().GetComponent<AudioSource>().Play();
-            UpdateScores();
-            FreezePlayers();
-            StartCoroutine(AnimateBoard());
+            Finish();
         }
 
         private void UpdateScores()

@@ -32,6 +32,9 @@ namespace Event
                     b.EmptyBox();
                 }
             }
+
+            yield return new WaitForSeconds(0.3f);
+            GetComponent<AudioSource>().Play();
         }
     }
 }

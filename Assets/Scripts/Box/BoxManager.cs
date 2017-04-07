@@ -4,8 +4,8 @@ using Warehouse;
 
 namespace Box
 {
-    public class BoxManager : MonoBehaviour {
-
+    public class BoxManager : MonoBehaviour
+    {
         private BoxRecipe[] _recipes;
         private int[] _recipesLeft;
         public int[] PlayerGoods;
@@ -26,7 +26,8 @@ namespace Box
 
         public int Score;
 
-        void Start () {
+        private void Start()
+        {
             PlayerGoods = new int[4];
             PlayerWrongs = new int[4];
             _recipes = new BoxRecipe[NumRecipes];
@@ -64,7 +65,7 @@ namespace Box
         {
             _recipesLeft[index]--;
 
-            if(_recipesLeft[index] <= 0)
+            if (_recipesLeft[index] <= 0)
             {
                 _recipes[index] = GenerateRecipe();
                 _recipesLeft[index] = Random.Range(MinSameRecipe, MaxSameRecipe);
@@ -72,9 +73,10 @@ namespace Box
 
             ApplyWeights();
         }
+
         public bool ValidateBox(Box box, BoxRecipe br)
         {
-            foreach(IngredientType type in br.Bom)
+            foreach (IngredientType type in br.Bom)
             {
                 if (!box.HasIngredient(type))
                 {
@@ -94,9 +96,8 @@ namespace Box
 
             for (int i = 0; i < IngredientsPerBox; i++)
             {
-
                 int index;
-                while(true)
+                while (true)
                 {
                     index = Random.Range(0, IngredientTypes.Length);
                     if (!usedIngredients.ContainsKey(index))
@@ -125,9 +126,9 @@ namespace Box
         private void ApplyWeights()
         {
             Dictionary<IngredientType, int> weights = new Dictionary<IngredientType, int>();
-            foreach(BoxRecipe br in _recipes)
+            foreach (BoxRecipe br in _recipes)
             {
-                foreach(IngredientType it in br.Bom)
+                foreach (IngredientType it in br.Bom)
                 {
                     if (weights.ContainsKey(it))
                     {

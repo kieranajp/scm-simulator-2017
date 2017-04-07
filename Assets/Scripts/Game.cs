@@ -20,13 +20,12 @@ public class Game : MonoBehaviour
         if (_self == null)
         {
             _self = gameObject;
+            DontDestroyOnLoad(_self);
         }
         else
         {
-            Destroy(gameObject);
+            DestroyImmediate(gameObject);
         }
-
-        DontDestroyOnLoad(_self);
     }
 
     private void Start ()

@@ -32,7 +32,7 @@ namespace PlayerChoose
             IsSelected = true;
             FindObjectOfType<SelectScreen>().PlayerSelected();
             StartCoroutine(AnimateArrow());
-            Game.SetCharacter(PlayerController, zeroIndexCharacter);
+            Game.SetCharacter(PlayerController, zeroIndexCharacter + 1);
         }
 
         private IEnumerator AnimateArrow()

@@ -8,29 +8,31 @@ namespace Player
         public PlayerMovement Movement;
         public PlayerPickup Pickup;
         private Animator _animator;
-        private PlayerBehaviour _player;
+        private string _animationPrefix;
 
         private void Start()
         {
-            _player = GetComponent<PlayerBehaviour>();
+            var player = GetComponent<PlayerBehaviour>().Player;
             _animator = GetComponent<Animator>();
+            var characterNumber = Game.PlayerCharacters[player];
+            _animationPrefix = "player_" + characterNumber + "_";
+            Debug.Log(_animationPrefix);
         }
 
         private void Update () {
             var isMoving = Math.Abs(Movement.Velocity.magnitude) > 0.05f;
-            var p = "player_" + (int)_player.Player + "_";
 
             if (isMoving) {
                 if (Pickup.IsCarrying) {
-                    _animator.Play(p + "WalkHold");
+                    _animator.Play(_animationPrefix + "WalkHold");
                 } else {
-                    _animator.Play(p + "Walk");
+                    _animator.Play(_animationPrefix + "Walk");
                 }
             } else {
                 if (Pickup.IsCarrying) {
-                    _animator.Play(p + "IdleHold");
+                    _animator.Play(_animationPrefix + "IdleHold");
                 } else {
-                    _animator.Play(p + "Idle");
+                    _animator.Play(_animationPrefix + "Idle");
                 }
             }
         }

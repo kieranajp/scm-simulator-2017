@@ -1,32 +1,35 @@
 ﻿using UnityEngine;
 
-public enum IngredientType
+namespace Pickable
 {
-    Carrot,
-    Brocolli,
-    Banana,
-    Chicken,
-    Lime,
-    Meat,
-    Milk,
-    Pepper,
-    Spud,
-    Tomato
-}
-
-public class Ingredient : Pickable.Pickable {
-    public IngredientType Type;
-
-    override public void PutDown()
+    public enum IngredientType
     {
-        base.PutDown();
-        var colliders = Physics2D.OverlapCircleAll(transform.position, 1f);
-        foreach (Collider2D c in colliders)
+        Carrot,
+        Brocolli,
+        Banana,
+        Chicken,
+        Lime,
+        Meat,
+        Milk,
+        Pepper,
+        Spud,
+        Tomato
+    }
+
+    public class Ingredient : Pickable {
+        public IngredientType Type;
+
+        public override void PutDown()
         {
-            var box = c.GetComponent<Box.Box>();
-            if (box != null)
+            base.PutDown();
+            var colliders = Physics2D.OverlapCircleAll(transform.position, 1f);
+            foreach (Collider2D c in colliders)
             {
-                box.AddIngredient(this);
+                var box = c.GetComponent<Box.Box>();
+                if (box != null)
+                {
+                    box.AddIngredient(this);
+                }
             }
         }
     }

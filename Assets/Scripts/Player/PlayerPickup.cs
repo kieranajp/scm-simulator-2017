@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Pickable;
 using UnityEngine;
 using Utility;
 
 namespace Player
 {
-    public class PlayerPickup : MonoBehaviour {
-
+    public class PlayerPickup : MonoBehaviour
+    {
         public AudioClip PickupSound;
         public AudioClip PutDownSound;
         public Pickable.Pickable PickedUpObject;
@@ -25,9 +26,12 @@ namespace Player
         {
             if (PlayerInput.GetButtonDown("A", _playerBehaviour.Player))
             {
-                if (PickedUpObject != null) {
+                if (PickedUpObject != null)
+                {
                     PutDownObject();
-                } else {
+                }
+                else
+                {
                     PickUpClosestObject(Candidates);
                 }
             }
@@ -40,13 +44,21 @@ namespace Player
 
         public void PutDownObject()
         {
-            if (! IsCarrying) {
+            if (!IsCarrying)
+            {
                 return;
             }
+
             AudioSource.PlayClipAtPoint(PutDownSound, FindObjectOfType<AudioSource>().transform.position);
             PickedUpObject.PutDown();
             Candidates.Remove(PickedUpObject);
             IsCarrying = false;
+
+            if (PickedUpObject.GetType() != typeof(Ingredient) && PickedUpObject.GetComponent<Box.Box>() == null)
+            {
+                PickedUpObject.Explode();
+            }
+
             PickedUpObject = null;
         }
 
@@ -55,7 +67,8 @@ namespace Player
             if (ingredients.Count == 0) return;
 
             var ingredient = ingredients.OrderBy(t => (t.transform.position - transform.position).sqrMagnitude).First();
-            if (ingredient != null && ingredient.CanBePicked && !ingredient.IsPickedUp && ingredient.enabled) {
+            if (ingredient != null && ingredient.CanBePicked && !ingredient.IsPickedUp && ingredient.enabled)
+            {
                 ingredient.PickUp();
                 PickedUpObject = ingredient;
                 IsCarrying = true;

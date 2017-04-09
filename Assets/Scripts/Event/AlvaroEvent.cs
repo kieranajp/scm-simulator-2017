@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Pickable;
 using UnityEngine;
 
 namespace Event
@@ -22,7 +23,7 @@ namespace Event
                 {
                     continue;
                 }
-                ingredient.Explode(Explosion);
+                ingredient.Explode();
             }
 
             var boxes = FindObjectsOfType<Box.Box> ();

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Event;
 using UnityEngine;
 
 namespace Pickable
@@ -10,8 +11,8 @@ namespace Pickable
 
         public bool FiveSecondRule = true;
         public float MaxTimeOnFloor = 5f;
-        Vector3 _lastPosition = Vector3.zero;
-        float _timeOnFloor;
+        private Vector3 _lastPosition = Vector3.zero;
+        private float _timeOnFloor;
 
         public virtual void PickUp()
         {
@@ -23,8 +24,9 @@ namespace Pickable
             IsPickedUp = false;
         }
 
-        public void Explode(GameObject explosion)
+        public void Explode()
         {
+            var explosion = FindObjectOfType<AlvaroEvent>().Explosion;
             StartCoroutine(ExplodePickable(explosion));
         }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GameStatus;
+using Pickable;
 using UnityEngine;
 using Warehouse;
 

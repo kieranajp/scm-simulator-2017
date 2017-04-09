@@ -2,44 +2,61 @@
 using Player;
 using UnityEngine;
 
-public class MaximEvent : RandomEvent {
-
-	public float Boost    = 3.0f;
-	public float Duration = 5.0f;
-
-	public override void Fire() {
-		ChangePlayersSpeed (Boost);
-        ResetCollision(true);
-		StartCoroutine ("ResetSpeed");
-	}
-
-	private void ChangePlayersSpeed(float value) {
-		var players = GameObject.FindObjectsOfType<PlayerMovement> ();
-
-		foreach (PlayerMovement player in players) {
-			player.Speed += value;
-		}
-	}
-
-    private void ResetCollision(bool ignore)
+namespace Event
+{
+    public class MaximEvent : RandomEvent
     {
-		var players = GameObject.FindObjectsOfType<PlayerMovement> ();
+        public float Boost = 3.0f;
+        public float Duration = 5.0f;
 
-        for (var i = 0; i < players.Length; i++)
+
+        public override void Fire()
         {
-            for (var j = 0; j < players.Length; j++)
-            {
-                Physics2D.IgnoreCollision(players[i].GetComponent<Collider2D>(), players[j].GetComponent<Collider2D>(), ignore);
-            }
+            SpeedUp();
+            StartCoroutine(ResetSpeed());
         }
 
+        private void SpeedUp()
+        {
+            var players = FindObjectsOfType<PlayerMovement>();
+
+            foreach (var player in players)
+            {
+                player.GetComponent<SpriteRenderer>().color = Color.red;
+                player.Speed += Boost;
+            }
+            ResetCollision(true);
+        }
+
+        private IEnumerator ResetSpeed()
+        {
+            yield return new WaitForSeconds(Duration);
+
+            var players = FindObjectsOfType<PlayerMovement>();
+
+            foreach (var player in players)
+            {
+                player.GetComponent<SpriteRenderer>().color = Color.white;
+                player.Speed = player.OriginalSpeed;
+            }
+            ResetCollision(false);
+        }
+
+        private void ResetCollision(bool ignore)
+        {
+            var players = FindObjectsOfType<PlayerMovement>();
+
+            foreach (var player1 in players)
+            {
+                foreach (var player2 in players)
+                {
+                    Physics2D.IgnoreCollision(
+                        player1.GetComponent<Collider2D>(),
+                        player2.GetComponent<Collider2D>(),
+                        ignore
+                    );
+                }
+            }
+        }
     }
-
-	private IEnumerator ResetSpeed() {
-		yield return new WaitForSeconds (Duration);
-
-        ResetCollision(false);
-
-		ChangePlayersSpeed (Boost * -1);
-	}
 }

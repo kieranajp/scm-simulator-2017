@@ -1,42 +1,47 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class EventDispatcher : MonoBehaviour {
-
-	public float FirstEvent  = 10.0f;
-	public int   EventChance = 6;
-	public float EventTick   = 7.0f;
-
-	public List<RandomEvent> EventTypes;
-
-    public void Stop()
+namespace Event
+{
+    public class EventDispatcher : MonoBehaviour
     {
-        CancelInvoke();
-    }
+        public float FirstEvent = 10.0f;
+        public int EventChance = 6;
+        public float EventTick = 7.0f;
 
-	// Use this for initialization
-	void Start () {
-		InvokeRepeating ("RollForEvent", FirstEvent, EventTick);
-	}
+        public List<RandomEvent> EventTypes;
 
-	// Attempt to make an event occur
-	private void RollForEvent() {
-		var ShouldEventOccur = Random.Range (1, EventChance);
+        public void Stop()
+        {
+            CancelInvoke();
+        }
 
-		if (ShouldEventOccur == 1) {
-			var evt = ChooseEvent ();
+        private void Start()
+        {
+            InvokeRepeating("RollForEvent", FirstEvent, EventTick);
+        }
 
-			evt.Fire ();
-            var listeners = GameObject.FindGameObjectsWithTag("EventListener");
-            foreach (var listener in listeners)
+        // Attempt to make an event occur
+        private void RollForEvent()
+        {
+            var shouldEventOccur = Random.Range(1, EventChance);
+
+            if (shouldEventOccur == 1)
             {
-                listener.BroadcastMessage("OnEventFired", evt);
-            }
-		}
-	}
+                var evt = ChooseEvent();
 
-	private RandomEvent ChooseEvent() {
-		return EventTypes [Random.Range (0, EventTypes.Count)];
-	}
+                evt.Fire();
+                var listeners = GameObject.FindGameObjectsWithTag("EventListener");
+                foreach (var listener in listeners)
+                {
+                    listener.BroadcastMessage("OnEventFired", evt);
+                }
+            }
+        }
+
+        private RandomEvent ChooseEvent()
+        {
+            return EventTypes[Random.Range(0, EventTypes.Count)];
+        }
+    }
 }

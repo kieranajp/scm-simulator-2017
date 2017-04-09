@@ -1,42 +1,44 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using Player;
 using UnityEngine;
 
-public class WarnarEvent : RandomEvent {
+namespace Event
+{
+    public class WarnarEvent : RandomEvent
+    {
+        public float Duration = 3.0f;
+        public float Penalty = -3.0f;
 
-	public float Duration = 5.0f;
-	public float Penalty  = -3.0f;
+        public override void Fire()
+        {
+            GetComponent<AudioSource>().Play();
 
-	public override void Fire() {
-		ChangePlayersSpeed (Penalty);
-        GetComponent<AudioSource>().Play();
-		var players = GameObject.FindObjectsOfType<PlayerMovement> ();
+            SlowDown();
+            StartCoroutine(ResetSpeed());
+        }
 
-		foreach (PlayerMovement player in players) {
-            player.GetComponent<SpriteRenderer>().color = Color.blue;
-		}
+        private void SlowDown()
+        {
+            var players = FindObjectsOfType<PlayerMovement>();
 
-		StartCoroutine ("ResetSpeed");
-	}
+            foreach (var player in players)
+            {
+                player.GetComponent<SpriteRenderer>().color = Color.blue;
+                player.Speed += Penalty;
+            }
+        }
 
-	private void ChangePlayersSpeed(float value) {
-		var players = GameObject.FindObjectsOfType<PlayerMovement> ();
+        private IEnumerator ResetSpeed()
+        {
+            yield return new WaitForSeconds(Duration);
 
-		foreach (PlayerMovement player in players) {
-			player.Speed += value;
-		}
-	}
+            var players = FindObjectsOfType<PlayerMovement>();
 
-	private IEnumerator ResetSpeed() {
-		yield return new WaitForSeconds (Duration);
-
-		var players = GameObject.FindObjectsOfType<PlayerMovement> ();
-
-		foreach (PlayerMovement player in players) {
-            player.GetComponent<SpriteRenderer>().color = Color.white;
-		}
-
-		ChangePlayersSpeed (Penalty * -1);
-	}
+            foreach (var player in players)
+            {
+                player.GetComponent<SpriteRenderer>().color = Color.white;
+                player.Speed = player.OriginalSpeed;
+            }
+        }
+    }
 }

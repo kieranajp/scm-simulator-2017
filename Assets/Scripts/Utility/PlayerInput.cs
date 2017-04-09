@@ -5,29 +5,39 @@ using UnityEngine.EventSystems;
 
 namespace Utility
 {
-    public class PlayerInput : MonoBehaviour {
+    public class PlayerInput : MonoBehaviour
+    {
+        private static GameObject _self;
 
-        public int NumberOfPlayers;
+        private static readonly Dictionary<Player.Player, bool> Resetted = new Dictionary<Player.Player, bool>
+        {
+            {Player.Player.P1, true},
+            {Player.Player.P2, true},
+            {Player.Player.P3, true},
+            {Player.Player.P4, true}
+        };
 
-        private static Dictionary<Player.Player, bool> _resetted;
-        private static Dictionary<Player.Player, string> _lastAxis;
+        private static readonly Dictionary<Player.Player, string> LastAxis = new Dictionary<Player.Player, string>
+        {
+            {Player.Player.P1, ""},
+            {Player.Player.P2, ""},
+            {Player.Player.P3, ""},
+            {Player.Player.P4, ""}
+        };
+
         private const float MoveThreshold = 0.5f;
 
-        private void Start()
+        private void Awake()
         {
-            _resetted = new Dictionary<Player.Player, bool>{
-                {Player.Player.P1, true},
-                {Player.Player.P2, true},
-                {Player.Player.P3, true},
-                {Player.Player.P4, true}
-            };
-            _lastAxis = new Dictionary<Player.Player, string>{
-                {Player.Player.P1, ""},
-                {Player.Player.P2, ""},
-                {Player.Player.P3, ""},
-                {Player.Player.P4, ""}
-            };
-            NumberOfPlayers = Input.GetJoystickNames().Length;
+            if (_self == null)
+            {
+                _self = gameObject;
+                DontDestroyOnLoad(_self);
+            }
+            else
+            {
+                DestroyImmediate(gameObject);
+            }
         }
 
         public static float GetAxis(string axis, Player.Player player)
@@ -66,14 +76,14 @@ namespace Utility
 
             var value = GetAxis(axis, playerController);
 
-            if (_resetted[playerController])
+            if (Resetted[playerController])
             {
                 if (value > MoveThreshold)
                 {
                     if (direction == MoveDirection.Up || direction == MoveDirection.Right)
                     {
-                        _lastAxis[playerController] = axis;
-                        _resetted[playerController] = false;
+                        LastAxis[playerController] = axis;
+                        Resetted[playerController] = false;
                         return true;
                     }
                 }
@@ -81,16 +91,17 @@ namespace Utility
                 {
                     if (direction == MoveDirection.Down || direction == MoveDirection.Left)
                     {
-                        _lastAxis[playerController] = axis;
-                        _resetted[playerController] = false;
+                        LastAxis[playerController] = axis;
+                        Resetted[playerController] = false;
                         return true;
                     }
                 }
             }
 
-            if (_resetted[playerController] == false && Math.Abs(value) < MoveThreshold && _lastAxis[playerController] == axis)
+            if (Resetted[playerController] == false && Math.Abs(value) < MoveThreshold &&
+                LastAxis[playerController] == axis)
             {
-                _resetted[playerController] = true;
+                Resetted[playerController] = true;
             }
 
             return false;

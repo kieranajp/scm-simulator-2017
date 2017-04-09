@@ -3,8 +3,9 @@ using Utility;
 
 namespace Player
 {
-    public class PlayerMovement : MonoBehaviour {
-
+    public class PlayerMovement : MonoBehaviour
+    {
+        public float OriginalSpeed;
         public float Speed;
         private Rigidbody2D _rb;
         public Vector2 Velocity;
@@ -14,6 +15,7 @@ namespace Player
 
         private void Start()
         {
+            Speed = OriginalSpeed;
             _rb = GetComponent<Rigidbody2D>();
             Velocity = new Vector2();
             _player = GetComponent<PlayerBehaviour>();
@@ -25,7 +27,8 @@ namespace Player
             _rb.velocity = Vector2.zero;
         }
 
-        private void FixedUpdate () {
+        private void FixedUpdate()
+        {
             if (_isStopped) return;
 
             var horizontal = PlayerInput.GetAxis("Horizontal", _player.Player) * Speed;

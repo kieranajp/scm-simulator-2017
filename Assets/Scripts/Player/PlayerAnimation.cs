@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerAnimation : MonoBehaviour {
-
+    public class PlayerAnimation : MonoBehaviour
+    {
         public PlayerMovement Movement;
         public PlayerPickup Pickup;
         private Animator _animator;
@@ -16,22 +16,31 @@ namespace Player
             _animator = GetComponent<Animator>();
             var characterNumber = Game.PlayerCharacters[player];
             _animationPrefix = "player_" + characterNumber + "_";
-            Debug.Log(_animationPrefix);
         }
 
-        private void Update () {
+        private void Update()
+        {
             var isMoving = Math.Abs(Movement.Velocity.magnitude) > 0.05f;
 
-            if (isMoving) {
-                if (Pickup.IsCarrying) {
+            if (isMoving)
+            {
+                if (Pickup.IsCarrying)
+                {
                     _animator.Play(_animationPrefix + "WalkHold");
-                } else {
+                }
+                else
+                {
                     _animator.Play(_animationPrefix + "Walk");
                 }
-            } else {
-                if (Pickup.IsCarrying) {
+            }
+            else
+            {
+                if (Pickup.IsCarrying)
+                {
                     _animator.Play(_animationPrefix + "IdleHold");
-                } else {
+                }
+                else
+                {
                     _animator.Play(_animationPrefix + "Idle");
                 }
             }

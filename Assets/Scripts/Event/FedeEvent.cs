@@ -1,21 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Player;
-using UnityEngine;
+﻿using Player;
 
-public class FedeEvent : RandomEvent {
+namespace Event
+{
+    public class FedeEvent : RandomEvent
+    {
+        public override void Fire()
+        {
+            var players = FindObjectsOfType<PlayerMovement>();
 
-	public override void Fire() {
-		var players = GameObject.FindObjectsOfType<PlayerMovement> ();
+            var newPosition = players[players.Length - 1].transform.position;
 
-		Vector3 newPosition = players [players.Length - 1].transform.position;
+            foreach (var player in players)
+            {
+                var oldPosition = player.transform.position;
 
-		foreach (var player in players) {
-			Vector3 oldPosition = player.transform.position;
+                player.transform.position = newPosition;
 
-			player.transform.position = newPosition;
-
-			newPosition = oldPosition;
-		}
-	}
+                newPosition = oldPosition;
+            }
+        }
+    }
 }

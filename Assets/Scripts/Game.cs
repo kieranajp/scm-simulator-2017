@@ -28,7 +28,7 @@ public class Game : MonoBehaviour
         }
     }
 
-    private void Start ()
+    private void Start()
     {
         NumberOfPlayers = Input.GetJoystickNames().Length;
     }

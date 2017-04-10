@@ -11,11 +11,13 @@ namespace GameStatus
 {
     public class EndGame : MonoBehaviour {
 
-        private bool _isFinished = false;
+        private bool _isFinished;
         public AudioClip GameOver;
         public float AnimationSpeed = 0.2f;
         public GameObject[] AnimateObjects;
         private EventDispatcher _eventDispatcher;
+        public Sprite[] Characters;
+        public Image[] PlayerImages;
         public Text[] GoodBoxes;
         public Text[] BadBoxes;
         public Text TotalGoodBoxes;
@@ -45,11 +47,20 @@ namespace GameStatus
                 FindObjectOfType<Camera>().GetComponent<AudioSource>().clip = GameOver;
                 FindObjectOfType<Camera>().GetComponent<AudioSource>().loop = false;
                 FindObjectOfType<Camera>().GetComponent<AudioSource>().Play();
+                UpdateCharacters();
                 UpdateScores();
                 FreezePlayers();
                 StartCoroutine(AnimateBoard());
             }
             _isFinished = true;
+        }
+
+        private void UpdateCharacters()
+        {
+            for (var i = 1; i <= 4; i++)
+            {
+                PlayerImages[i-1].sprite = Characters[Game.PlayerCharacters[i.ToPlayer()] - 1];
+            }
         }
 
         [UsedImplicitly]

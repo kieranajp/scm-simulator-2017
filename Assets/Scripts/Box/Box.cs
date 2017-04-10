@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using Pickable;
 using Player;
-using UnityEditor.Animations;
 using UnityEngine;
 
 namespace Box
 {
     public class Box : Pickable.Pickable
     {
+        public Animator Animator;
         public Sprite CarryingBox;
         public Sprite ClosedBox;
         public int MaximumIngredients = 4;
@@ -19,10 +19,10 @@ namespace Box
         private float _originalSpeed;
         public GameObject AnimationThrow;
         public bool HasBeenPicked;
-        public AnimatorController ItemThrowerAnimator;
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             CanBePicked = false;
             _movement = FindObjectOfType<PlayerMovement>();
             _originalSpeed = _movement.Speed;
@@ -83,7 +83,7 @@ namespace Box
                 i.transform.parent = container.transform;
                 var animator = i.AddComponent<Animator>();
                 animator.enabled = true;
-                animator.runtimeAnimatorController = ItemThrowerAnimator;
+                animator.runtimeAnimatorController = Animator.runtimeAnimatorController;
                 animator.Play("Throw" + Random.Range(1, 4));
             }
             yield return new WaitForSeconds(0.3f);

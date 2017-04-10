@@ -15,7 +15,7 @@ namespace Pickable
         private float _timeOnFloor;
         protected SpriteRenderer SpriteRenderer;
 
-        protected void Start()
+        protected virtual void Start()
         {
             SpriteRenderer = GetComponent<SpriteRenderer>();
         }

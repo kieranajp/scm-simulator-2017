@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
@@ -35,6 +37,18 @@ public class Game : MonoBehaviour
 
     public static void SetCharacter(Player.Player player, int character)
     {
+        var newCharacterPlayer = PlayerCharacters.FirstOrDefault(x => x.Value == character).Key;
+        var oldCharacter = PlayerCharacters[player];
         PlayerCharacters[player] = character;
+        PlayerCharacters[newCharacterPlayer] = oldCharacter;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Time.timeScale = 1;
+            SceneManager.LoadScene("Menu");
+        }
     }
 }

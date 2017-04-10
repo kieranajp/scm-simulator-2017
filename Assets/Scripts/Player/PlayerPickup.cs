@@ -54,7 +54,7 @@ namespace Player
             Candidates.Remove(PickedUpObject);
             IsCarrying = false;
 
-            if (PickedUpObject.GetType() != typeof(Ingredient) && PickedUpObject.GetComponent<Box.Box>() == null)
+            if (PickedUpObject.GetComponent<Item>())
             {
                 PickedUpObject.Explode();
             }

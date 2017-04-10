@@ -13,6 +13,12 @@ namespace Pickable
         public float MaxTimeOnFloor = 5f;
         private Vector3 _lastPosition = Vector3.zero;
         private float _timeOnFloor;
+        protected SpriteRenderer SpriteRenderer;
+
+        protected void Start()
+        {
+            SpriteRenderer = GetComponent<SpriteRenderer>();
+        }
 
         public virtual void PickUp()
         {
@@ -45,8 +51,13 @@ namespace Pickable
 
             if(_timeOnFloor > MaxTimeOnFloor)
             {
-                StartCoroutine(Dissolve());
+                Remove();
             }
+        }
+
+        public void Remove()
+        {
+            StartCoroutine(Dissolve());
         }
 
         private IEnumerator ExplodePickable(GameObject explosion)

@@ -10,7 +10,7 @@ namespace Event
         public float Delay = 3.0f;
 
         public override void Fire() {
-            StartCoroutine ("DestroyAllIngredients");
+            StartCoroutine (DestroyAllIngredients());
         }
 		
         private IEnumerator DestroyAllIngredients() {

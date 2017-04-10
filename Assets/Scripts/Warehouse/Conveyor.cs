@@ -8,8 +8,9 @@ namespace Warehouse
     public class Conveyor : MonoBehaviour
     {
         public Transform SpawnPoint;
+        public bool IsBlocked;
 
-        private HashSet<Pickable.Pickable> _items = new HashSet<Pickable.Pickable>();
+        private readonly HashSet<Pickable.Pickable> _items = new HashSet<Pickable.Pickable>();
 
         public Vector3 Direction = new Vector3(0, -1, 0);
         public float MinSpawnTime = 1;
@@ -51,9 +52,10 @@ namespace Warehouse
             _items.Remove(i);
         }
 
-        // Update is called once per frame
-        void Update()
+        private void Update()
         {
+            if (IsBlocked) return;
+
             SpawnIngredients(Time.deltaTime);
 
             foreach (var i in _items)
@@ -95,15 +97,15 @@ namespace Warehouse
             _totalWeight = ItemsRecipeAppliedWeights.Sum();
         }
 
-        void SpawnIngredients(float delta)
+        private void SpawnIngredients(float delta)
         {
             LastSpawn -= delta;
             if (LastSpawn < 0)
             {
                 var rngnum = Random.Range(0, _totalWeight);
 
-                int i = 0;
-                int curWeight = ItemsRecipeAppliedWeights[0];
+                var i = 0;
+                var curWeight = ItemsRecipeAppliedWeights[0];
                 while (rngnum > curWeight)
                 {
                     i++;
